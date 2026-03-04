@@ -8,9 +8,6 @@ export default function Footer() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-12 text-sm">
           <div className="flex flex-col gap-2">
-            <span className="hover:underline cursor-pointer">Kodemy Business</span>
-            <span className="hover:underline cursor-pointer">Teach on Kodemy</span>
-            <span className="hover:underline cursor-pointer">Get the app</span>
           </div>
           <div className="flex flex-col gap-2">
             <span className="hover:underline cursor-pointer">About us</span>
