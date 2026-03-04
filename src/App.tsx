@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -8,8 +9,15 @@ import CartPage from './pages/CartPage'
 import SubjectLayout from './layouts/SubjectLayout'
 import VideoPage from './pages/VideoPage'
 import SubjectIndex from './pages/SubjectIndex'
+import { startKeepAlive } from './lib/keepAlive'
 
 function App() {
+  // Ping the Render backend every 14 minutes so the free-tier instance
+  // never spins down due to inactivity.
+  useEffect(() => {
+    startKeepAlive()
+  }, [])
+
   return (
     <BrowserRouter>
       <Routes>
