@@ -7,6 +7,7 @@ import CoursePage from './pages/CoursePage'
 import CartPage from './pages/CartPage'
 import SubjectLayout from './layouts/SubjectLayout'
 import VideoPage from './pages/VideoPage'
+import SubjectIndex from './pages/SubjectIndex'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/course/:subjectId" element={<CoursePage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/subjects/:subjectId" element={<SubjectLayout />}>
+           <Route index element={<SubjectIndex />} />
            <Route path="video/:videoId" element={<VideoPage />} />
         </Route>
       </Routes>

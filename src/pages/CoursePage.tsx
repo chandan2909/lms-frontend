@@ -103,12 +103,7 @@ export default function CoursePage() {
   };
 
   const handleStartLearning = () => {
-    // Find first video to redirect to
-    if (sections.length > 0 && sections[0].videos?.length > 0) {
-      navigate(`/subjects/${parsedId}/video/${sections[0].videos[0].id}`);
-    } else {
-      navigate(`/subjects/${parsedId}`);
-    }
+    navigate(`/subjects/${parsedId}`);
   };
 
   if (loading) {
