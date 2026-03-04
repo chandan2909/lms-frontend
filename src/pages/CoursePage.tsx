@@ -70,14 +70,20 @@ export default function CoursePage() {
     fetchData();
   }, [parsedId]);
 
-  const handleBuy = () => {
+  const handleBuy = async () => {
     if (!isAuthenticated) {
       navigate(`/auth/login?redirect=/course/${parsedId}`);
       return;
     }
-    purchaseSingle(parsedId);
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 3000);
+    
+    try {
+      await purchaseSingle(parsedId);
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
+    } catch (error) {
+      console.error('Purchase failed:', error);
+      alert('Failed to purchase course. Please try again.');
+    }
   };
 
   const handleAddToCart = () => {

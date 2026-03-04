@@ -19,7 +19,7 @@ interface CartState {
   isInCart: (id: number) => boolean;
   isPurchased: (id: number) => boolean;
   purchaseAll: () => Promise<void>;
-  purchaseSingle: (id: number) => void;
+  purchaseSingle: (id: number) => Promise<void>;
   getTotal: () => number;
   getOriginalTotal: () => number;
 }
@@ -65,13 +65,20 @@ const useCartStore = create<CartState>()(
         }
       },
 
-      purchaseSingle: (id) => {
+      purchaseSingle: async (id) => {
         const { purchased, items } = get();
-        if (!purchased.includes(id)) {
+        if (purchased.includes(id)) return;
+
+        try {
+          await apiClient.post('/subjects/enroll', { subjectIds: [id] });
+          
           set({
-            purchased: [...purchased, id],
+            purchased: [...new Set([...purchased, id])],
             items: items.filter((i) => i.id !== id),
           });
+        } catch (error) {
+          console.error('Failed to persist single enrollment:', error);
+          throw error;
         }
       },
 
