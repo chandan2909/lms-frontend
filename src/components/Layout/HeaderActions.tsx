@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import useAuthStore from '../../store/authStore';
 
 export default function HeaderActions() {
-  const { isAuthenticated, logout } = useAuthStore();
+  const { isAuthenticated, logout, user } = useAuthStore();
   const [mounted, setMounted] = useState(false);
   const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ export default function HeaderActions() {
           Logout
         </button>
         <Link to="/profile" className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-bold ml-2">
-          U
+          {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
         </Link>
       </nav>
     );
