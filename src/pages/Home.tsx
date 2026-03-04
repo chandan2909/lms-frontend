@@ -18,15 +18,15 @@ export default function Home() {
       .finally(() => setLoading(false));
   }, []);
 
-  const getGradient = (id: number) => {
-    const gradients = [
-      'from-violet-600 to-indigo-700',
-      'from-sky-500 to-blue-700',
-      'from-emerald-500 to-teal-700',
-      'from-orange-500 to-red-600',
-      'from-pink-500 to-rose-600',
+  const getColor = (id: number) => {
+    const colors = [
+      'bg-indigo-600',
+      'bg-blue-600',
+      'bg-emerald-600',
+      'bg-red-600',
+      'bg-rose-600',
     ];
-    return gradients[id % gradients.length];
+    return colors[id % colors.length];
   };
 
   const getIcon = (id: number) => {
@@ -163,7 +163,7 @@ export default function Home() {
                   className="group flex flex-col bg-white border border-gray-200 hover:border-[#1c1d1f] hover:shadow-lg transition-all duration-200 text-left overflow-hidden"
                 >
                   {/* Thumbnail */}
-                  <div className={`relative w-full aspect-video bg-gradient-to-br ${getGradient(subject.id)} flex flex-col items-center justify-center`}>
+                  <div className={`relative w-full aspect-video ${getColor(subject.id)} flex flex-col items-center justify-center`}>
                     <span className="text-4xl mb-1">{getIcon(subject.id)}</span>
                     <span className="text-white/80 text-xs font-semibold uppercase tracking-wider">
                       {getCourseHours(subject.id)}h · {getCourseLectures(subject.id)} lectures
