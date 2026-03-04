@@ -27,6 +27,7 @@ export default function VideoPage() {
       setLoading(true);
       setError('');
       setCompletionMarked(false);
+      setAutoPlayCountdown(null);
       try {
         const { data } = await apiClient.get(`/videos/${parsedVideoId}?subjectId=${parsedSubjectId}`);
         setVideoData(data);
@@ -208,6 +209,7 @@ export default function VideoPage() {
           )}
 
           <VideoPlayer
+            key={videoData.id}
             youtubeId={videoData.youtube_url}
             onEnd={onVideoEnd}
             onStateChange={onStateChange}
