@@ -96,6 +96,7 @@ export default function CoursePage() {
     
     try {
       await purchaseSingle(parsedId);
+      setEnrolled(true); // immediately switch button to "Start Learning"
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 3000);
     } catch (error) {
