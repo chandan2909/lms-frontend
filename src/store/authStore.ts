@@ -19,6 +19,7 @@ interface AuthState {
   setUser: (user: User) => void;
   fetchUser: () => Promise<void>;
   logout: () => void;
+  deleteAccount: () => Promise<void>;
 }
 
 const useAuthStore = create<AuthState>()(
@@ -42,6 +43,17 @@ const useAuthStore = create<AuthState>()(
         useCartStore.getState().clearAll();
         set({ accessToken: null, isAuthenticated: false, user: null });
         apiClient.post('/auth/logout').catch(() => {});
+      },
+      deleteAccount: async () => {
+        try {
+          await apiClient.delete('/auth/me');
+        } catch (error) {
+          console.error('Failed to delete account on backend:', error);
+        } finally {
+          // Whether backend call succeeds or fails, clear local state so user is logged out
+          useCartStore.getState().clearAll();
+          set({ accessToken: null, isAuthenticated: false, user: null });
+        }
       },
     }),
     { name: 'auth-storage' }

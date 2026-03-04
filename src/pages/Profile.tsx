@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import apiClient from '@/lib/apiClient';
 import AuthGuard from '@/components/Auth/AuthGuard';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import useAuthStore from '@/store/authStore';
@@ -11,8 +11,9 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('learning');
+  const navigate = useNavigate();
 
-  const { user, fetchUser } = useAuthStore();
+  const { user, fetchUser, deleteAccount } = useAuthStore();
 
   useEffect(() => {
     fetchUser();
@@ -56,7 +57,7 @@ export default function ProfilePage() {
         {/* Profile Navigation */}
         <div className="bg-white border-b border-gray-200 sticky top-[72px] z-40">
            <div className="max-w-5xl mx-auto px-6 flex gap-8">
-              {['learning', 'certificates', 'history'].map((tab) => (
+              {['learning', 'certificates', 'history', 'settings'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -67,7 +68,8 @@ export default function ProfilePage() {
                   }`}
                 >
                   {tab === 'learning' ? 'My Learning' : 
-                   tab === 'certificates' ? 'Certificates' : 'Purchase History'}
+                   tab === 'certificates' ? 'Certificates' : 
+                   tab === 'history' ? 'Purchase History' : 'Settings'}
                 </button>
               ))}
            </div>
@@ -147,6 +149,27 @@ export default function ProfilePage() {
           {activeTab === 'history' && (
              <div className="bg-white border border-gray-200 rounded p-12 text-center text-gray-500 font-medium">
                 <p>You haven't made any purchases.</p>
+             </div>
+          )}
+
+          {activeTab === 'settings' && (
+             <div className="bg-white border border-gray-200 rounded p-8">
+                <h2 className="text-xl font-bold mb-4">Danger Zone</h2>
+                <p className="text-gray-600 mb-6 text-sm">
+                  Once you delete your account, there is no going back. Please be certain.
+                  This will permanently delete your user data, purchase history, and course progress.
+                </p>
+                <button
+                  onClick={async () => {
+                    if (window.confirm('Are you absolutely sure you want to delete your account? This action cannot be undone.')) {
+                      await deleteAccount();
+                      navigate('/');
+                    }
+                  }}
+                  className="px-6 py-2 border-2 border-red-600 text-red-600 font-bold hover:bg-red-50 transition-colors"
+                >
+                  Delete Account
+                </button>
              </div>
           )}
         </main>
