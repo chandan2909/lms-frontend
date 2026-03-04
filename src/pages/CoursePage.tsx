@@ -210,7 +210,7 @@ export default function CoursePage() {
                 {enrolled ? (
                   <button
                     onClick={handleStartLearning}
-                    className="w-full py-3 bg-[#a435f0] text-white font-bold text-base rounded hover:bg-[#8710d8] transition-colors mb-3"
+                    className="w-full py-3 bg-[#1c1d1f] text-white font-bold text-base hover:bg-gray-800 transition-colors mb-3"
                   >
                     Start Learning →
                   </button>
@@ -218,21 +218,21 @@ export default function CoursePage() {
                   <>
                     <button
                       onClick={handleBuy}
-                      className="w-full py-3 bg-[#a435f0] text-white font-bold text-base rounded hover:bg-[#8710d8] transition-colors mb-3"
+                      className="w-full py-3 bg-[#1c1d1f] text-white font-bold text-base hover:bg-gray-800 transition-colors mb-3"
                     >
                       Buy now
                     </button>
                     {inCart ? (
                       <button
                         onClick={() => navigate('/cart')}
-                        className="w-full py-3 bg-[#1c1d1f] text-white font-bold text-base rounded hover:bg-gray-800 transition-colors mb-3"
+                        className="w-full py-3 bg-white text-[#1c1d1f] font-bold text-base border border-[#1c1d1f] hover:bg-[#f7f9fa] transition-colors mb-3"
                       >
                         Go to cart
                       </button>
                     ) : (
                       <button
                         onClick={handleAddToCart}
-                        className="w-full py-3 bg-white text-[#1c1d1f] font-bold text-base border border-[#1c1d1f] rounded hover:bg-gray-50 transition-colors mb-3"
+                        className="w-full py-3 bg-white text-[#1c1d1f] font-bold text-base border border-[#1c1d1f] hover:bg-[#f7f9fa] transition-colors mb-3"
                       >
                         Add to cart
                       </button>

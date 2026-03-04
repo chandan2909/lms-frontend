@@ -180,7 +180,7 @@ export default function VideoPage() {
           {videoData.previous_video_id && (
             <button
               onClick={() => navigate(`/subjects/${parsedSubjectId}/video/${videoData.previous_video_id}`)}
-              className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-[#1c1d1f]/80 hover:bg-[#1c1d1f] text-white transition-all transform hover:scale-110 shadow-2xl border border-white/10 backdrop-blur-sm"
+              className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-[#1c1d1f] hover:bg-gray-800 text-white transition-all transform hover:scale-110 shadow-2xl border border-white/10"
               title="Previous Lesson"
             >
               <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -194,9 +194,9 @@ export default function VideoPage() {
             <button
               onClick={() => navigate(`/subjects/${parsedSubjectId}/video/${videoData.next_video_id}`)}
               disabled={!completionMarked}
-              className={`absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full transition-all transform hover:scale-110 shadow-2xl border backdrop-blur-sm ${
+              className={`absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full transition-all transform hover:scale-110 shadow-2xl border ${
                 completionMarked
-                  ? 'bg-[#a435f0] hover:bg-[#8710d8] text-white border-[#a435f0]/50'
+                  ? 'bg-[#1c1d1f] hover:bg-gray-800 text-white border-white/10'
                   : 'bg-black/20 text-gray-600 border-transparent cursor-not-allowed opacity-30'
               }`}
               title={completionMarked ? 'Next Lesson' : 'Complete lesson to unlock'}
@@ -223,13 +223,13 @@ export default function VideoPage() {
                 <div className="flex gap-4 justify-center">
                   <button
                     onClick={() => setAutoPlayCountdown(null)}
-                    className="px-6 py-2 rounded font-bold border border-white/20 hover:bg-white/10 text-white transition-colors text-sm"
+                    className="px-6 py-2 font-bold border border-[#1c1d1f] text-[#1c1d1f] bg-white hover:bg-[#f7f9fa] transition-colors text-sm"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={() => navigate(`/subjects/${parsedSubjectId}/video/${videoData.next_video_id}`)}
-                    className="px-6 py-2 rounded font-bold bg-[#a435f0] text-white hover:bg-[#8710d8] transition-colors text-sm"
+                    className="px-6 py-2 font-bold bg-[#1c1d1f] text-white hover:bg-gray-800 transition-colors text-sm"
                   >
                     Play Now
                   </button>
