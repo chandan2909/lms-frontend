@@ -12,10 +12,11 @@ export interface CartItem {
 
 interface CartState {
   items: CartItem[];
-  purchased: number[]; // subject IDs that have been "purchased"
+  purchased: number[]; // subject IDs that have been "purchased" (local cache)
   addItem: (item: CartItem) => void;
   removeItem: (id: number) => void;
   clearCart: () => void;
+  clearAll: () => void; // clears items AND purchased (called on logout)
   isInCart: (id: number) => boolean;
   isPurchased: (id: number) => boolean;
   purchaseAll: () => Promise<void>;
@@ -42,6 +43,8 @@ const useCartStore = create<CartState>()(
       },
 
       clearCart: () => set({ items: [] }),
+
+      clearAll: () => set({ items: [], purchased: [] }),
 
       isInCart: (id) => get().items.some((i) => i.id === id),
 
