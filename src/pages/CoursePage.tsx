@@ -210,7 +210,7 @@ export default function CoursePage() {
                 {enrolled ? (
                   <button
                     onClick={handleStartLearning}
-                    className="w-full py-3 bg-[#5624d0] text-white font-bold text-base rounded hover:bg-[#4a1fb8] transition-colors mb-3"
+                    className="w-full py-3 bg-[#a435f0] text-white font-bold text-base rounded hover:bg-[#8710d8] transition-colors mb-3"
                   >
                     Start Learning →
                   </button>
