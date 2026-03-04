@@ -146,43 +146,58 @@ export default function VideoPage() {
         <p className="text-gray-300 text-sm">{videoData.description || 'No description provided.'}</p>
       </div>
 
-      <div className="w-full max-w-[800px] mx-auto">
-        <VideoPlayer 
-          youtubeId={videoData.youtube_url} 
-          onEnd={onVideoEnd}
-          onStateChange={onStateChange}
-          onReady={onPlayerReady}
-        />
+      <div className="w-full max-w-[1000px] mx-auto relative group px-4 md:px-0">
+        {/* Navigation Buttons Container */}
+        <div className="absolute inset-y-0 left-0 md:-left-20 flex items-center z-10">
+          {videoData.previous_video_id && (
+            <button 
+              onClick={() => navigate(`/subjects/${parsedSubjectId}/video/${videoData.previous_video_id}`)}
+              className="w-10 h-10 md:w-14 md:h-14 flex items-center justify-center rounded-full bg-black/60 hover:bg-black/90 text-white transition-all transform hover:scale-110 shadow-2xl border border-white/10 backdrop-blur-sm"
+              title="Previous Lesson"
+            >
+              <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+          )}
+        </div>
+
+        <div className="w-full rounded-lg overflow-hidden shadow-2xl border border-gray-800">
+          <VideoPlayer 
+            youtubeId={videoData.youtube_url} 
+            onEnd={onVideoEnd}
+            onStateChange={onStateChange}
+            onReady={onPlayerReady}
+          />
+        </div>
+
+        <div className="absolute inset-y-0 right-0 md:-right-20 flex items-center z-10">
+          {videoData.next_video_id && (
+            <button 
+              onClick={() => navigate(`/subjects/${parsedSubjectId}/video/${videoData.next_video_id}`)}
+              disabled={!completionMarked}
+              className={`w-10 h-10 md:w-14 md:h-14 flex items-center justify-center rounded-full transition-all transform hover:scale-110 shadow-2xl border backdrop-blur-sm ${
+                completionMarked 
+                  ? 'bg-black/60 hover:bg-black/90 text-white border-white/10' 
+                  : 'bg-black/20 text-gray-600 border-transparent cursor-not-allowed opacity-30'
+              }`}
+              title={completionMarked ? "Next Lesson" : "Complete lesson to unlock"}
+            >
+              <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          )}
+        </div>
       </div>
 
-      <div className="mt-8 pt-6 border-t border-gray-700 flex items-center justify-between w-full max-w-[800px] mx-auto">
-        {videoData.previous_video_id ? (
-          <button 
-            onClick={() => navigate(`/subjects/${parsedSubjectId}/video/${videoData.previous_video_id}`)}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white border border-white hover:bg-white hover:text-black transition-colors"
-          >
-            &larr; Previous Lesson
-          </button>
-        ) : <div />}
-
-        {videoData.next_video_id ? (
-          <button 
-            onClick={() => navigate(`/subjects/${parsedSubjectId}/video/${videoData.next_video_id}`)}
-            disabled={!completionMarked}
-            className={`flex items-center gap-2 px-6 py-2 text-sm font-bold transition-colors ${
-              completionMarked 
-                ? 'bg-white text-black hover:bg-gray-200 border border-white opacity-100' 
-                : 'bg-transparent text-gray-500 border border-gray-600 cursor-not-allowed opacity-50'
-            }`}
-          >
-            Next Lesson &rarr;
-          </button>
-        ) : (
-           <div className="text-sm font-bold text-green-400">
-             You have completed this subject!
+      {!videoData.next_video_id && completionMarked && (
+        <div className="mt-8 text-center">
+           <div className="inline-block px-6 py-2 rounded-full bg-green-900/30 border border-green-500/50 text-green-400 font-bold text-sm">
+             🎉 Subject Completed!
            </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
