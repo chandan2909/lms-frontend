@@ -15,9 +15,11 @@ export default function VideoPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [completionMarked, setCompletionMarked] = useState(false);
+  const [autoPlayCountdown, setAutoPlayCountdown] = useState<number | null>(null);
   
   const { markVideoCompleted } = useSidebarStore();
   const progressInterval = useRef<any>(null);
+  const autoPlayTimerRef = useRef<any>(null);
   const playerRef = useRef<any>(null);
 
   useEffect(() => {
@@ -46,8 +48,25 @@ export default function VideoPage() {
 
     return () => {
       if (progressInterval.current) clearInterval(progressInterval.current);
+      if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
     };
   }, [parsedVideoId, parsedSubjectId]);
+
+  useEffect(() => {
+    if (autoPlayCountdown !== null && autoPlayCountdown > 0) {
+      autoPlayTimerRef.current = setTimeout(() => {
+        setAutoPlayCountdown(prev => (prev !== null ? prev - 1 : null));
+      }, 1000);
+    } else if (autoPlayCountdown === 0) {
+      if (videoData?.next_video_id) {
+        navigate(`/subjects/${parsedSubjectId}/video/${videoData.next_video_id}`);
+      }
+      setAutoPlayCountdown(null);
+    }
+    return () => {
+      if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
+    };
+  }, [autoPlayCountdown, videoData?.next_video_id, navigate, parsedSubjectId]);
 
   const handleProgress = async (currentTime: number, isFinished: boolean) => {
     try {
@@ -84,6 +103,11 @@ export default function VideoPage() {
     if (playerRef.current) {
       const duration = playerRef.current.getDuration();
       handleProgress(duration, true);
+
+      // Start auto-play if there's a next video
+      if (videoData?.next_video_id) {
+        setAutoPlayCountdown(5);
+      }
     }
   };
 
@@ -162,13 +186,37 @@ export default function VideoPage() {
           )}
         </div>
 
-        <div className="w-full rounded-lg overflow-hidden shadow-2xl border border-gray-800">
+        <div className="w-full rounded-lg overflow-hidden shadow-2xl border border-gray-800 relative">
           <VideoPlayer 
             youtubeId={videoData.youtube_url} 
             onEnd={onVideoEnd}
             onStateChange={onStateChange}
             onReady={onPlayerReady}
           />
+
+          {/* Auto-play Overlay */}
+          {autoPlayCountdown !== null && (
+            <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center z-20 backdrop-blur-sm transition-all duration-300">
+              <div className="text-center p-8 rounded-xl bg-[#2d2f31] border border-white/10 shadow-2xl scale-in-center">
+                <h3 className="text-xl font-bold text-white mb-2">Up Next</h3>
+                <p className="text-gray-400 mb-6 text-sm">Next lesson starting in <span className="text-white font-mono text-lg">{autoPlayCountdown}</span> seconds...</p>
+                <div className="flex gap-4">
+                  <button 
+                    onClick={() => setAutoPlayCountdown(null)}
+                    className="px-6 py-2 rounded font-bold border border-white/20 hover:bg-white/10 text-white transition-colors text-sm"
+                  >
+                    Cancel
+                  </button>
+                  <button 
+                    onClick={() => navigate(`/subjects/${parsedSubjectId}/video/${videoData.next_video_id}`)}
+                    className="px-6 py-2 rounded font-bold bg-white text-black hover:bg-gray-200 transition-colors text-sm"
+                  >
+                    Play Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="absolute inset-y-0 right-0 md:-right-20 flex items-center z-10">
