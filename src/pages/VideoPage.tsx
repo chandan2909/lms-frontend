@@ -102,10 +102,13 @@ export default function VideoPage() {
   const onVideoEnd = () => {
     if (playerRef.current) {
       const duration = playerRef.current.getDuration();
+
+      // Only start autoplay countdown if this is a NEW completion.
+      // If the video was already completed before this session, skip the popup.
+      const wasAlreadyCompleted = completionMarked;
       handleProgress(duration, true);
 
-      // Start auto-play if there's a next video
-      if (videoData?.next_video_id) {
+      if (videoData?.next_video_id && !wasAlreadyCompleted) {
         setAutoPlayCountdown(5);
       }
     }
