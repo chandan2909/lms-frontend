@@ -72,18 +72,13 @@ export default function CoursePage() {
     fetchData();
   }, [parsedId]);
 
-  // Separately check enrollment status from backend (authoritative source)
+  // Always check enrollment status from backend — it's the only source of truth.
+  // localStorage (isPurchased) can be stale across logins, so we never rely on it alone.
   useEffect(() => {
     if (!isAuthenticated) {
       setEnrolled(false);
       return;
     }
-    // Use cartStore optimistic value first, then confirm from backend
-    if (isPurchased(parsedId)) {
-      setEnrolled(true);
-      return;
-    }
-    // Fetch enrollment truth from backend progress overview
     apiClient.get('/progress/overview').then(({ data }) => {
       const isEnrolled = data.some((course: any) => course.subject_id === parsedId);
       setEnrolled(isEnrolled);
