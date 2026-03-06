@@ -12,6 +12,7 @@
   "dependencies": {
     "@gradio/client": "^2.1.0",
     "axios": "^1.7.9",
+    "framer-motion": "^12.35.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",

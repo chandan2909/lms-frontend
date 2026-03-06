@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
+import PageTransition from './components/Layout/PageTransition'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -13,6 +15,29 @@ import ChatbotPage from './pages/ChatbotPage'
 import CheckoutPage from './pages/CheckoutPage'
 import { startKeepAlive } from './lib/keepAlive'
 
+function AnimatedRoutes() {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+        <Route path="/auth/login" element={<PageTransition><Login /></PageTransition>} />
+        <Route path="/auth/register" element={<PageTransition><Register /></PageTransition>} />
+        <Route path="/profile" element={<PageTransition><Profile /></PageTransition>} />
+        <Route path="/course/:subjectId" element={<PageTransition><CoursePage /></PageTransition>} />
+        <Route path="/cart" element={<PageTransition><CartPage /></PageTransition>} />
+        <Route path="/checkout" element={<PageTransition><CheckoutPage /></PageTransition>} />
+        <Route path="/chat" element={<PageTransition><ChatbotPage /></PageTransition>} />
+        <Route path="/subjects/:subjectId" element={<PageTransition><SubjectLayout /></PageTransition>}>
+           <Route index element={<SubjectIndex />} />
+           <Route path="video/:videoId" element={<VideoPage />} />
+        </Route>
+      </Routes>
+    </AnimatePresence>
+  )
+}
+
 function App() {
   // Ping the Render backend every 14 minutes so the free-tier instance
   // never spins down due to inactivity.
@@ -22,20 +47,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/auth/login" element={<Login />} />
-        <Route path="/auth/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/course/:subjectId" element={<CoursePage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
-        <Route path="/chat" element={<ChatbotPage />} />
-        <Route path="/subjects/:subjectId" element={<SubjectLayout />}>
-           <Route index element={<SubjectIndex />} />
-           <Route path="video/:videoId" element={<VideoPage />} />
-        </Route>
-      </Routes>
+      <AnimatedRoutes />
     </BrowserRouter>
   )
 }
