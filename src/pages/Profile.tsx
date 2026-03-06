@@ -31,6 +31,22 @@ export default function ProfilePage() {
     fetchProgress();
   }, [fetchUser]);
 
+  // Pricing seed logic (identical to CoursePage to maintain consistency)
+  const seededRandom = (seed: number) => {
+    let x = Math.sin(seed * 9301 + 49297) * 233280;
+    return x - Math.floor(x);
+  };
+  const priceOptions = [999, 1299, 1499, 1999, 2499, 3499, 4999, 7999, 9999];
+
+  const getCoursePrice = (subjectId: number) => {
+    return priceOptions[Math.floor(seededRandom(subjectId) * priceOptions.length)];
+  };
+
+  const getCourseOriginalPrice = (subjectId: number, basePrice: number) => {
+    const originalMultiplier = 3 + seededRandom(subjectId + 100) * 4;
+    return Math.round(basePrice * originalMultiplier);
+  };
+
   const joinDate = user?.created_at 
     ? new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })
     : 'Unknown date';
@@ -166,8 +182,60 @@ export default function ProfilePage() {
           )}
 
           {activeTab === 'history' && (
-             <div className="bg-white border border-gray-200 rounded p-12 text-center text-gray-500 font-medium">
-                <p>You haven't made any purchases.</p>
+             <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <div className="px-6 py-4 border-b border-gray-200 bg-[#f7f9fa]">
+                  <h3 className="text-lg font-bold text-[#1c1d1f] font-serif">Your Purchases</h3>
+                </div>
+                {progress.length === 0 ? (
+                  <div className="p-12 text-center text-gray-500 font-medium">
+                    <p>You haven't made any purchases.</p>
+                  </div>
+                ) : (
+                  <div className="divide-y divide-gray-200">
+                    {progress.map((p: any) => {
+                      const price = getCoursePrice(p.subject_id);
+                      const purchaseDate = p.enrolled_at 
+                        ? new Date(p.enrolled_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+                        : 'Unknown date';
+                      
+                      return (
+                        <div key={p.subject_id} className="p-4 md:p-6 flex flex-col md:flex-row gap-4 md:gap-6 items-start md:items-center hover:bg-gray-50 transition-colors">
+                          {/* Thumbnail */}
+                          <div className="w-full md:w-48 aspect-video bg-[#2d2f31] flex-shrink-0 relative">
+                            {p.thumbnail_url ? (
+                               <img
+                                 src={p.thumbnail_url}
+                                 alt={p.subject_title}
+                                 className="w-full h-full object-cover"
+                                 onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                               />
+                             ) : (
+                               <svg className="w-8 h-8 text-white opacity-50 absolute inset-0 m-auto" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                             )}
+                          </div>
+                          
+                          {/* Details */}
+                          <div className="flex-grow min-w-0 flex flex-col items-start gap-1">
+                            <Link to={`/subjects/${p.subject_id}`} className="text-base md:text-lg font-bold text-[#1c1d1f] hover:text-[#5624d0] hover:underline line-clamp-2">
+                              {p.subject_title || 'Course'}
+                            </Link>
+                            <p className="text-sm text-gray-500">Dr. Instructor</p>
+                            <div className="flex items-center gap-2 mt-2 pt-2 md:pt-0 md:mt-1">
+                               <span className="text-xs font-medium bg-gray-100 text-gray-600 px-2 py-1 rounded">Receipt</span>
+                               <span className="text-xs text-gray-500">{purchaseDate}</span>
+                            </div>
+                          </div>
+
+                          {/* Price */}
+                          <div className="flex flex-row md:flex-col items-end gap-2 md:gap-0 mt-2 md:mt-0 right-0">
+                            <span className="text-lg font-bold text-[#1c1d1f]">₹{price.toLocaleString('en-IN')}</span>
+                            <span className="text-sm text-[#0056d2] hover:underline cursor-pointer font-medium mt-1">Receipt</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
              </div>
           )}
 
