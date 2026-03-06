@@ -240,11 +240,11 @@ export default function ChatbotPage() {
     if (streamIntervalRef.current) clearInterval(streamIntervalRef.current);
 
     let charIndex = 0;
-    // Adaptive speed: reveal the full text in roughly 1.5–2 seconds
-    // ~150 chars/s for short texts, faster for long ones
+    // Slower adaptive speed: reveal the full text in roughly 3–8 seconds
+    // Short responses ~3s, long responses up to 8s
     const totalChars = aiText.length;
-    const targetMs = Math.min(2000, Math.max(800, totalChars * 8));
-    const tickMs = 16; // ~60fps
+    const targetMs = Math.min(8000, Math.max(3000, totalChars * 15));
+    const tickMs = 30; // ~33fps — smooth but visibly slower
     const charsPerTick = Math.max(1, Math.ceil(totalChars / (targetMs / tickMs)));
 
     streamIntervalRef.current = setInterval(() => {
