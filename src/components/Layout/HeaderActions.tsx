@@ -40,7 +40,7 @@ export default function HeaderActions({ isMobile, closeMenu }: { isMobile?: bool
            </Link>
         )}
         {!isMobile && (
-          <Link to="/" onClick={closeMenu} className={`text-sm font-bold px-3 transition-colors ${isActive('/') ? 'text-[#5624d0]' : 'text-[#1c1d1f] hover:text-[#5624d0]'}`}>
+          <Link to="/" onClick={closeMenu} className={`text-sm font-bold px-4 py-2 rounded-full transition-all ${isActive('/') ? 'bg-[#1c1d1f] text-white' : 'text-[#1c1d1f] hover:bg-gray-100'}`}>
             Home
           </Link>
         )}
@@ -51,10 +51,10 @@ export default function HeaderActions({ isMobile, closeMenu }: { isMobile?: bool
         >
           <span className="text-base leading-none">✨</span> AI Assistant
         </Link>
-        <Link to="/profile" onClick={closeMenu} className={`text-sm font-bold transition-colors ${isActive('/profile') ? 'text-[#5624d0]' : 'text-[#1c1d1f] hover:text-[#5624d0]'} ${isMobile ? 'w-full py-2' : 'px-3'}`}>
+        <Link to="/profile" onClick={closeMenu} className={`text-sm font-bold transition-all ${isMobile ? 'w-full py-2 px-3 rounded-lg' : 'px-4 py-2 rounded-full'} ${isActive('/profile') ? 'bg-[#1c1d1f] text-white' : 'text-[#1c1d1f] hover:bg-gray-100'}`}>
           My learning
         </Link>
-        <button onClick={handleLogout} className={`text-sm font-bold text-[#1c1d1f] hover:text-[#5624d0] text-left ${isMobile ? 'w-full py-2' : 'px-3'}`}>
+        <button onClick={handleLogout} className={`text-sm font-bold text-[#1c1d1f] hover:bg-gray-100 transition-all text-left ${isMobile ? 'w-full py-2 px-3 rounded-lg' : 'px-4 py-2 rounded-full'}`}>
           Logout
         </button>
         {!isMobile && (
@@ -69,7 +69,7 @@ export default function HeaderActions({ isMobile, closeMenu }: { isMobile?: bool
   return (
     <nav className={`flex ${isMobile ? 'flex-col items-stretch gap-4' : 'items-center gap-2'}`}>
       {!isMobile && (
-        <Link to="/" onClick={closeMenu} className={`text-sm font-bold px-3 mr-2 transition-colors ${isActive('/') ? 'text-[#5624d0]' : 'text-[#1c1d1f] hover:text-[#5624d0]'}`}>
+        <Link to="/" onClick={closeMenu} className={`text-sm font-bold px-4 py-2 rounded-full transition-all mr-2 ${isActive('/') ? 'bg-[#1c1d1f] text-white' : 'text-[#1c1d1f] hover:bg-gray-100'}`}>
           Home
         </Link>
       )}

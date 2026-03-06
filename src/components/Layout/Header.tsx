@@ -30,7 +30,7 @@ export default function Header() {
         {/* Mobile Home Button */}
         <Link 
           to="/" 
-          className={`md:hidden relative p-2 transition-colors ${isActive('/') ? 'text-[#5624d0]' : 'text-[#1c1d1f] hover:text-[#a435f0]'}`}
+          className={`md:hidden relative p-2 transition-colors rounded-full ${isActive('/') ? 'bg-[#1c1d1f] text-white' : 'text-[#1c1d1f] hover:bg-gray-100'}`}
           title="Home" 
           aria-label="Home"
         >
@@ -42,7 +42,7 @@ export default function Header() {
         {/* Cart Button */}
         <Link 
           to="/cart" 
-          className={`relative p-2 transition-colors ${isActive('/cart') ? 'text-[#5624d0]' : 'text-[#1c1d1f] hover:text-[#a435f0]'}`}
+          className={`relative p-2 transition-colors rounded-full ${isActive('/cart') ? 'bg-[#1c1d1f] text-white' : 'text-[#1c1d1f] hover:bg-gray-100'}`}
           title="Cart" 
           aria-label="Cart"
         >
