@@ -20,6 +20,13 @@ export default function HeaderActions() {
   if (isAuthenticated) {
     return (
       <nav className="flex items-center gap-3">
+        <Link 
+          to="/chat" 
+          target="_blank" 
+          className="text-sm font-bold flex items-center gap-1 text-white bg-gradient-to-r from-purple-600 to-indigo-600 px-3 py-1.5 rounded-full hover:shadow-lg transition-all"
+        >
+          <span className="text-base leading-none">✨</span> AI Assistant
+        </Link>
         <Link to="/profile" className="text-sm font-bold text-[#1c1d1f] hover:text-[#5624d0] px-3">
           My learning
         </Link>
@@ -35,6 +42,13 @@ export default function HeaderActions() {
 
   return (
     <nav className="flex items-center gap-2">
+      <Link 
+        to="/chat" 
+        target="_blank" 
+        className="text-sm font-bold flex items-center gap-1 text-white bg-[#1c1d1f] px-3 py-1.5 rounded-full hover:bg-gray-800 transition-all mr-2"
+      >
+        <span className="text-base leading-none">✨</span> AI Assistant
+      </Link>
       <Link 
         to="/auth/login" 
         className="h-10 px-4 flex items-center justify-center text-sm font-bold text-[#1c1d1f] border border-[#1c1d1f] bg-white hover:bg-[#f7f9fa] transition-colors"
