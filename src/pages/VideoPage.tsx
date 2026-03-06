@@ -172,13 +172,8 @@ export default function VideoPage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto p-4 md:p-8 w-full bg-[#1c1d1f] lg:min-h-full">
-      <div className="mb-4 md:mb-6 w-full max-w-[800px] mx-auto text-left">
-        <h1 className="text-xl md:text-2xl font-bold tracking-tight mb-2 text-white">{videoData.title}</h1>
-        <p className="text-gray-300 text-sm">{videoData.description || 'No description provided.'}</p>
-      </div>
-
-      <div className="w-full max-w-[1000px] mx-auto relative group">
+    <div className="max-w-7xl mx-auto p-4 md:p-6 lg:p-8 w-full bg-[#1c1d1f] lg:min-h-full flex flex-col">
+      <div className="w-full mx-auto relative group">
         {/* Video + embedded nav buttons */}
         <div className="w-full rounded-lg overflow-hidden shadow-2xl border border-gray-800 relative">
 
@@ -247,13 +242,16 @@ export default function VideoPage() {
         </div>
       </div>
 
-      {!videoData.next_video_id && completionMarked && (
-        <div className="mt-8 text-center">
-           <div className="inline-block px-6 py-2 rounded-full bg-green-900/30 border border-green-500/50 text-green-400 font-bold text-sm">
-             🎉 Subject Completed!
-           </div>
-        </div>
-      )}
+      <div className="mt-6 md:mt-8 w-full mx-auto text-left flex-1">
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-3 text-white">{videoData.title}</h1>
+        <p className="text-gray-300 text-base md:text-lg max-w-4xl leading-relaxed">{videoData.description || 'No description provided.'}</p>
+        
+        {!videoData.next_video_id && completionMarked && (
+          <div className="mt-6 inline-block px-6 py-2 rounded-full bg-green-900/30 border border-green-500/50 text-green-400 font-bold text-sm">
+            🎉 Subject Completed!
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -9,10 +9,10 @@ export default function SubjectLayout() {
 
   return (
     <AuthGuard>
-      <div className="flex flex-col h-screen overflow-hidden">
+      <div className="flex flex-col min-h-screen lg:h-screen lg:overflow-hidden bg-[#1c1d1f]">
         <Header />
-        <div className="flex flex-col lg:flex-row flex-1 overflow-hidden bg-[#1c1d1f] pt-[72px]">
-          <div className="flex-none lg:flex-1 relative overflow-y-auto lg:overflow-y-auto custom-scrollbar text-white flex flex-col">
+        <div className="flex flex-col lg:flex-row flex-1 lg:overflow-hidden pt-[72px]">
+          <div className="flex-1 relative lg:overflow-y-auto custom-scrollbar text-white">
             <Outlet />
           </div>
           <SubjectSidebar subjectId={parsedSubjectId} />
