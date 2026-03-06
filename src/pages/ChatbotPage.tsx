@@ -59,7 +59,7 @@ export default function ChatbotPage() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [syncing, setSyncing] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 768);
   // Streaming state
   const [streamingText, setStreamingText] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
@@ -139,6 +139,19 @@ export default function ChatbotPage() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [activeChat?.messages, loading, streamingText]);
+
+  // Handle window resize for sidebar
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setSidebarOpen(false);
+      } else {
+        setSidebarOpen(true);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // --- Chat actions ---
 
@@ -286,10 +299,18 @@ export default function ChatbotPage() {
   };
 
   return (
-    <div className="flex h-screen bg-white font-sans overflow-hidden">
+    <div className="flex h-screen bg-white font-sans overflow-hidden relative">
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-20 md:hidden" 
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+      
       {/* Sidebar */}
-      <aside className={`${sidebarOpen ? 'w-64' : 'w-0'} flex-shrink-0 bg-[#1c1d1f] flex flex-col overflow-hidden transition-all duration-300`}>
-        <div className="px-3 pt-4 pb-2 flex items-center justify-between">
+      <aside className={`${sidebarOpen ? 'w-64' : 'w-0'} absolute md:relative z-30 h-full flex-shrink-0 bg-[#1c1d1f] flex flex-col overflow-hidden transition-all duration-300`}>
+        <div className="px-3 pt-4 pb-2 flex items-center justify-between w-64">
           <span className="text-white font-bold text-sm tracking-wide">✨ Kodemy AI</span>
           {syncing && <span className="text-xs text-gray-400 animate-pulse">Syncing...</span>}
         </div>
@@ -308,8 +329,11 @@ export default function ChatbotPage() {
           {chats.map(chat => (
             <div
               key={chat.id}
-              onClick={() => setActiveChatId(chat.id)}
-              className={`group flex items-center gap-2 px-3 py-2.5 rounded-lg cursor-pointer text-sm transition-all ${
+              onClick={() => {
+                setActiveChatId(chat.id);
+                if (window.innerWidth < 768) setSidebarOpen(false);
+              }}
+              className={`group flex items-center gap-2 px-3 py-2.5 rounded-lg cursor-pointer text-sm transition-all w-[232px] ${
                 chat.id === activeChatId
                   ? 'bg-white/15 text-white'
                   : 'text-gray-400 hover:bg-white/10 hover:text-gray-200'
@@ -377,8 +401,8 @@ export default function ChatbotPage() {
           </button>
         </header>
 
-        <div className="flex-1 overflow-y-auto">
-          <div className="pb-44 pt-4">
+        <div className="flex-1 overflow-y-auto mb-[72px] md:mb-0">
+          <div className="pb-32 md:pb-44 pt-4">
             {activeChat?.messages.map((msg, i) => (
               <ChatMessage key={i} role={msg.role} content={msg.content} />
             ))}
@@ -403,13 +427,12 @@ export default function ChatbotPage() {
         </div>
 
         <div
-          className="fixed bottom-0 right-0 bg-gradient-to-t from-white via-white to-transparent pt-8 pb-6 px-4"
-          style={{ left: sidebarOpen ? '256px' : '0px', transition: 'left 0.3s' }}
+          className={`fixed bottom-0 right-0 bg-gradient-to-t from-white via-white to-transparent pt-8 pb-4 md:pb-6 px-3 md:px-4 transition-all duration-300 ${sidebarOpen ? 'md:left-64 left-0' : 'left-0'}`}
         >
           <div className="max-w-3xl mx-auto">
             <form
               onSubmit={handleSubmit}
-              className="flex items-end gap-2 bg-white border border-gray-300 rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.1)] p-2 focus-within:ring-2 focus-within:ring-[#1c1d1f] focus-within:border-[#1c1d1f] transition-all"
+              className="flex items-end gap-2 bg-white border border-gray-300 rounded-lg md:rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.1)] p-2 focus-within:ring-2 focus-within:ring-[#1c1d1f] focus-within:border-[#1c1d1f] transition-all"
             >
               <textarea
                 ref={textareaRef}
