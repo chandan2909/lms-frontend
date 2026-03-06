@@ -42,13 +42,6 @@ export default function HeaderActions({ isMobile, closeMenu }: { isMobile?: bool
             Home
           </Link>
         )}
-        <Link 
-          to="/chat" 
-          onClick={closeMenu}
-          className={`text-sm font-bold flex items-center gap-1 text-white bg-gradient-to-r from-purple-600 to-indigo-600 px-3 py-1.5 rounded-full hover:shadow-lg transition-all ${isMobile ? 'w-full justify-center py-2' : ''}`}
-        >
-          <span className="text-base leading-none">✨</span> AI Assistant
-        </Link>
         <Link to="/profile" onClick={closeMenu} className={`text-sm font-bold transition-all ${isMobile ? 'w-full py-2 px-3 rounded-lg' : 'px-4 py-2 rounded-full'} ${isActive('/profile') ? 'bg-[#1c1d1f] text-white' : 'text-[#1c1d1f] hover:bg-gray-100'}`}>
           My profile
         </Link>
@@ -71,13 +64,6 @@ export default function HeaderActions({ isMobile, closeMenu }: { isMobile?: bool
           Home
         </Link>
       )}
-      <Link 
-        to="/chat" 
-        onClick={closeMenu}
-        className={`text-sm font-bold flex items-center justify-center gap-1 text-white bg-[#1c1d1f] px-3 py-1.5 rounded-full hover:bg-gray-800 transition-all ${isMobile ? 'py-2.5' : 'mr-2'}`}
-      >
-        <span className="text-base leading-none">✨</span> AI Assistant
-      </Link>
       <Link 
         to="/auth/login" 
         onClick={closeMenu}
