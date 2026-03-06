@@ -3,47 +3,33 @@ import useCartStore from '@/store/cartStore';
 import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import { useState } from 'react';
-import CheckoutModal from '@/components/Checkout/CheckoutModal';
 
 export default function CartPage() {
-  const { items, removeItem, purchaseAll, getTotal, getOriginalTotal } = useCartStore();
+  const { items, removeItem, getTotal, getOriginalTotal } = useCartStore();
   const navigate = useNavigate();
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [showCheckout, setShowCheckout] = useState(false);
 
   const total = getTotal();
   const originalTotal = getOriginalTotal();
   const discount = originalTotal > 0 ? Math.round((1 - total / originalTotal) * 100) : 0;
 
   const handleCheckout = () => {
-    setShowCheckout(true);
+    navigate('/checkout', {
+      state: {
+        amount: total,
+        originalAmount: originalTotal,
+        itemCount: items.length,
+        onSuccessAction: 'cart',
+      }
+    });
   };
 
-  const handlePaymentSuccess = async () => {
-    await purchaseAll();
-    setShowCheckout(false);
-    setShowSuccess(true);
-    setTimeout(() => {
-      setShowSuccess(false);
-      navigate('/');
-    }, 3000);
-  };
-
-  return (
-    <>
-      <div className="min-h-screen flex flex-col bg-[#f7f9fa]">
+  return (      <div className="min-h-screen flex flex-col bg-[#f7f9fa]">
         <Header />
       <main className="flex-grow pt-[72px]">
         <div className="max-w-5xl mx-auto px-6 py-10">
           <h1 className="text-4xl font-bold text-[#1c1d1f] mb-8 font-serif">Shopping Cart</h1>
 
-          {showSuccess && (
-            <div className="bg-green-50 border border-green-300 text-green-800 px-6 py-4 rounded-lg mb-6 text-base font-medium animate-pulse">
-              ✅ Purchase successful! Redirecting to homepage...
-            </div>
-          )}
-
-          {items.length === 0 && !showSuccess ? (
+          {items.length === 0 ? (
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-16 text-center">
               <svg className="w-20 h-20 text-gray-300 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -146,16 +132,5 @@ export default function CartPage() {
       </main>
       <Footer />
     </div>
-    {/* Razorpay-style checkout modal */}
-    {showCheckout && (
-      <CheckoutModal
-        amount={total}
-        originalAmount={originalTotal}
-        itemCount={items.length}
-        onClose={() => setShowCheckout(false)}
-        onSuccess={handlePaymentSuccess}
-      />
-    )}
-  </>
   );
 }

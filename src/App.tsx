@@ -10,6 +10,7 @@ import SubjectLayout from './layouts/SubjectLayout'
 import VideoPage from './pages/VideoPage'
 import SubjectIndex from './pages/SubjectIndex'
 import ChatbotPage from './pages/ChatbotPage'
+import CheckoutPage from './pages/CheckoutPage'
 import { startKeepAlive } from './lib/keepAlive'
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/course/:subjectId" element={<CoursePage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/chat" element={<ChatbotPage />} />
         <Route path="/subjects/:subjectId" element={<SubjectLayout />}>
            <Route index element={<SubjectIndex />} />

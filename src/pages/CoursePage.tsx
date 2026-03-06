@@ -5,21 +5,18 @@ import useAuthStore from '@/store/authStore';
 import useCartStore from '@/store/cartStore';
 import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
-import CheckoutModal from '@/components/Checkout/CheckoutModal';
 
 export default function CoursePage() {
   const { subjectId } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthStore();
-  const { addItem, isInCart, isPurchased, purchaseSingle } = useCartStore();
+  const { addItem, isInCart, isPurchased } = useCartStore();
   const parsedId = parseInt(subjectId as string, 10);
 
   const [subject, setSubject] = useState<any>(null);
   const [sections, setSections] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showSuccess, setShowSuccess] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
-  const [showCheckout, setShowCheckout] = useState(false);
   // Track enrollment from backend (source of truth) OR cartStore (optimistic)
   const [enrolled, setEnrolled] = useState(false);
 
@@ -95,15 +92,16 @@ export default function CoursePage() {
       navigate(`/auth/login?redirect=/course/${parsedId}`);
       return;
     }
-    setShowCheckout(true);
-  };
-
-  const handleBuyPaymentSuccess = async () => {
-    await purchaseSingle(parsedId);
-    setShowCheckout(false);
-    setEnrolled(true);
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 3000);
+    navigate('/checkout', {
+      state: {
+        amount: fakePrice,
+        originalAmount: fakeOriginal,
+        itemCount: 1,
+        courseTitle: subject?.title || 'Course',
+        onSuccessAction: 'single',
+        subjectId: parsedId,
+      }
+    });
   };
 
   const handleAddToCart = () => {
@@ -141,7 +139,6 @@ export default function CoursePage() {
   const totalVideos = sections.reduce((acc: number, s: any) => acc + (s.videos?.length || 0), 0);
 
   return (
-    <>
     <div className="min-h-screen flex flex-col bg-white">
       <Header />
 
@@ -258,12 +255,6 @@ export default function CoursePage() {
                   </div>
                 )}
 
-                {/* Success Toast */}
-                {showSuccess && (
-                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded mb-3 text-sm font-medium animate-pulse">
-                    ✅ Purchase successful! You now have full access.
-                  </div>
-                )}
 
                 {/* Money-back */}
                 <p className="text-xs text-gray-500 text-center">30-Day Money-Back Guarantee</p>
@@ -353,16 +344,5 @@ export default function CoursePage() {
 
       <Footer />
     </div>
-
-    {showCheckout && (
-      <CheckoutModal
-        amount={fakePrice}
-        originalAmount={fakeOriginal}
-        itemCount={1}
-        onClose={() => setShowCheckout(false)}
-        onSuccess={handleBuyPaymentSuccess}
-      />
-    )}
-    </>
   );
 }
