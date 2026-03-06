@@ -226,23 +226,21 @@ export default function ChatbotPage() {
       aiText = "Sorry, I'm having trouble connecting to the AI server right now. Please try again.";
     }
 
+    // Update UI immediately — spinner disappears as soon as we have the response
     updateLocalChat(chatId, chat => ({
       ...chat,
       messages: [...chat.messages, { role: 'assistant', content: aiText }],
     }));
-
-    // Persist AI response to backend
-    if (isAuthenticated) {
-      try {
-        await apiClient.post(`/chats/${chatId}/messages`, {
-          role: 'assistant',
-          content: aiText,
-          createdAt: Date.now(),
-        });
-      } catch { /* ignore */ }
-    }
-
     setLoading(false);
+
+    // Persist AI response to backend in the background (fire-and-forget)
+    if (isAuthenticated) {
+      apiClient.post(`/chats/${chatId}/messages`, {
+        role: 'assistant',
+        content: aiText,
+        createdAt: Date.now(),
+      }).catch(() => { /* ignore */ });
+    }
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
