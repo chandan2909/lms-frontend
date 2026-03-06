@@ -138,7 +138,7 @@ export default function VideoPage() {
   if (error || !videoData || videoData.locked) {
     const isLocked = videoData?.locked || error.includes('locked');
     return (
-      <div className="flex h-full items-center justify-center p-8 bg-[#1c1d1f] min-h-screen">
+      <div className="flex h-full items-center justify-center p-8 bg-[#1c1d1f]">
         <div className="text-center">
           <div className="bg-[#2d2f31] p-10 rounded-lg mb-6 max-w-lg border border-gray-700 shadow-xl">
              <div className="flex justify-center mb-6">
@@ -172,7 +172,7 @@ export default function VideoPage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto p-4 md:p-8 w-full bg-[#1c1d1f] min-h-full">
+    <div className="max-w-5xl mx-auto p-4 md:p-8 w-full bg-[#1c1d1f] lg:min-h-full">
       <div className="mb-4 md:mb-6 w-full max-w-[800px] mx-auto text-left">
         <h1 className="text-xl md:text-2xl font-bold tracking-tight mb-2 text-white">{videoData.title}</h1>
         <p className="text-gray-300 text-sm">{videoData.description || 'No description provided.'}</p>
