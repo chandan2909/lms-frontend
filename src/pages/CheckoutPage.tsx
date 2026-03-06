@@ -170,14 +170,14 @@ export default function CheckoutPage() {
           </div>
         </div>
 
-        <div className="max-w-5xl mx-auto px-6 py-10">
-          <div className="flex flex-col lg:flex-row gap-8">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-6 md:py-10">
+          <div className="flex flex-col-reverse lg:flex-row gap-6 md:gap-8">
 
             {/* ── Left Column: Payment Form ── */}
-            <div className="flex-1 space-y-6">
+            <div className="flex-1 space-y-4 md:space-y-6">
 
               {/* Contact Details */}
-              <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <div className="bg-white border border-gray-200 rounded-lg p-4 md:p-6">
                 <h2 className="text-base font-bold text-[#1c1d1f] mb-4 pb-3 border-b border-gray-100">Contact Details</h2>
                 <div className="space-y-4">
                   <div>
@@ -204,7 +204,7 @@ export default function CheckoutPage() {
               </div>
 
               {/* Payment Method */}
-              <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <div className="bg-white border border-gray-200 rounded-lg p-4 md:p-6">
                 <h2 className="text-base font-bold text-[#1c1d1f] mb-4 pb-3 border-b border-gray-100">Payment Method</h2>
 
                 {/* Method tabs */}
@@ -312,7 +312,7 @@ export default function CheckoutPage() {
 
             {/* ── Right Column: Order Summary ── */}
             <div className="lg:w-[340px] flex-shrink-0">
-              <div className="bg-white border border-gray-200 rounded-lg p-6 sticky top-[90px]">
+              <div className="bg-white border border-gray-200 rounded-lg p-4 md:p-6 lg:sticky lg:top-[90px]">
                 <h2 className="text-base font-bold text-[#1c1d1f] mb-4 pb-3 border-b border-gray-100">Order Summary</h2>
 
                 <div className="space-y-3 mb-4">
