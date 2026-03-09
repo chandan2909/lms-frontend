@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { getGradioClient, warmGradioClient } from '@/lib/gradioClient';
 import ChatMessage from '@/components/Chat/ChatMessage';
 import useAuthStore from '@/store/authStore';
 import apiClient from '@/lib/apiClient';
@@ -120,9 +119,9 @@ export default function ChatbotPage() {
     }
   }, [isAuthenticated, user]);
 
-  // Pre-warm the Gradio connection as soon as the page mounts
+  // No pre-warming needed for direct fetch
   useEffect(() => {
-    warmGradioClient();
+    // Keep for potential future pre-warming
   }, []);
 
   useEffect(() => {
@@ -242,13 +241,29 @@ export default function ChatbotPage() {
 
     let aiText = "Sorry, I couldn't process your request.";
     try {
-      const client = await getGradioClient();
-      const result = await client.predict('/respond', { message: userMsg });
-      const data = result.data;
-      if (typeof data === 'string') {
-        aiText = data;
-      } else if (Array.isArray(data) && data.length > 0) {
-        aiText = typeof data[0] === 'string' ? data[0] : JSON.stringify(data[0]);
+      const messagesPayload = [
+        { role: 'system', content: 'You are Kodemy AI Assistant, a helpful learning assistant. Provide clear and concise answers.' },
+        ...activeChat.messages.map(m => ({ role: m.role, content: m.content })),
+        { role: 'user', content: userMsg }
+      ];
+
+      const response = await fetch('https://spoidermon29-lms-ai-assistant.hf.space/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: messagesPayload,
+          temperature: 0.7,
+          max_tokens: 1024,
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch from AI server');
+      }
+
+      const data = await response.json();
+      if (data.choices && data.choices.length > 0 && data.choices[0].message) {
+        aiText = data.choices[0].message.content;
       }
     } catch {
       aiText = "Sorry, I'm having trouble connecting to the AI server right now. Please try again.";
