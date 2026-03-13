@@ -290,6 +290,11 @@ export default function ChatbotPage() {
             if (line.startsWith('data: ') && line !== 'data: [DONE]') {
               try {
                 const data = JSON.parse(line.slice(6));
+                
+                if (data.error) {
+                  throw new Error(data.error);
+                }
+
                 const token = data.choices[0]?.delta?.content || "";
                 aiText += token;
 
@@ -308,8 +313,9 @@ export default function ChatbotPage() {
           }
         }
       }
-    } catch (e) {
-      aiText = "Sorry, I'm having trouble connecting to the AI server right now. Please try again.";
+      }
+    } catch (e: any) {
+      aiText = e.message || "Sorry, I'm having trouble connecting to the AI server right now. Please try again.";
       updateLocalChat(chatId, chat => {
         const newChat = { ...chat };
         const msgs = [...newChat.messages];
