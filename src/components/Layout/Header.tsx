@@ -26,14 +26,17 @@ export default function Header() {
         Kodemy
       </Link>
 
-      <Link 
-        to="/chat" 
-        className="hidden md:flex items-center gap-1 text-sm font-bold bg-[#1c1d1f] text-white px-3 py-1.5 rounded-full hover:bg-gray-800 transition-colors ml-4"
-      >
-        <span className="text-base leading-none relative top-[-1px]">✨</span> AI Assistant
-      </Link>
-
       <div className="flex items-center gap-2 md:gap-4 flex-shrink-0 ml-auto">
+        {/* AI Assistant - Always visible */}
+        <Link 
+          to="/chat" 
+          className="flex items-center gap-1 text-sm font-bold bg-[#1c1d1f] text-white px-3 py-1.5 rounded-full hover:bg-gray-800 transition-colors"
+          title="AI Assistant"
+        >
+          <span className="text-base leading-none relative top-[-1px]">✨</span>
+          <span className="hidden md:inline">AI Assistant</span>
+        </Link>
+
         {/* Mobile Home Button */}
         <Link 
           to="/" 
