@@ -235,18 +235,22 @@ export default function ChatbotPage() {
     }
 
     let aiText = "";
-    
-    // Setup initial empty bot message
+
+    // Capture history BEFORE adding the empty placeholder, to avoid sending an
+    // empty assistant message to Gemini which causes it to return blank responses.
+    // activeChat.messages already has all previous messages (including system greeting),
+    // but NOT the user message yet (state update is async), so we build it manually.
+    const messagesPayload = activeChat.messages
+      .map(m => ({ role: m.role, content: m.content }))
+      .filter(m => m.content.trim() !== ''); // filter any empty messages
+
+    // Setup initial empty bot message placeholder for UI
     updateLocalChat(chatId, chat => ({
         ...chat,
         messages: [...chat.messages, { role: 'assistant', content: '' }],
     }));
 
-
-
     try {
-      const messagesPayload = activeChat.messages.map(m => ({ role: m.role, content: m.content }));
-      
       const token = useAuthStore.getState().accessToken;
       const headers: Record<string, string> = { 'Content-Type': 'application/json' };
       if (token) {
@@ -258,7 +262,7 @@ export default function ChatbotPage() {
       const streamResponse = await fetch(fetchUrl, {
         method: 'POST',
         headers,
-        credentials: 'include', // Important for cross-origin or same-site cookies
+        credentials: 'include',
         body: JSON.stringify({
           message: userMsg,
           history: messagesPayload
