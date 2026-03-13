@@ -258,6 +258,7 @@ export default function ChatbotPage() {
       const streamResponse = await fetch(fetchUrl, {
         method: 'POST',
         headers,
+        credentials: 'include', // Important for cross-origin or same-site cookies
         body: JSON.stringify({
           message: userMsg,
           history: messagesPayload
