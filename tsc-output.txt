@@ -1,2 +1,0 @@
-src/components/Video/VideoPlayer.tsx(38,19): error TS7006: Parameter 'e' implicitly has an 'any' type.
-src/pages/VideoPage.tsx(93,15): error TS6133: 'duration' is declared but its value is never read.
