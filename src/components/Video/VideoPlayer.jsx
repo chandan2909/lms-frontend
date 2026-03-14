@@ -1,14 +1,9 @@
-import YouTube, { YouTubeEvent } from 'react-youtube';
+import YouTube from 'react-youtube';
 
-interface VideoPlayerProps {
-  youtubeId: string;
-  onEnd: () => void;
-  onStateChange: (state: number) => void;
-  onReady?: (event: any) => void;
-}
 
-export default function VideoPlayer({ youtubeId, onEnd, onStateChange, onReady }: VideoPlayerProps) {
-  const extractId = (urlOrId: string) => {
+
+export default function VideoPlayer({ youtubeId, onEnd, onStateChange, onReady }) {
+  const extractId = (urlOrId) => {
     const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
     const match = urlOrId.match(regExp);
     return (match && match[7].length === 11) ? match[7] : urlOrId;
@@ -34,8 +29,8 @@ export default function VideoPlayer({ youtubeId, onEnd, onStateChange, onReady }
         opts={opts} 
         onEnd={onEnd}
         onReady={onReady}
-        onStateChange={(e: YouTubeEvent<number>) => onStateChange(e.data)}
-        onError={(e: any) => console.error("YouTube Player Error", e.data)}
+        onStateChange={(e) => onStateChange(e.data)}
+        onError={(e) => console.error("YouTube Player Error", e.data)}
         className="absolute top-0 left-0 w-full h-full"
         iframeClassName="w-full h-full"
       />

@@ -1,10 +1,7 @@
 import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
 
-interface PageTransitionProps {
-  children: ReactNode;
-  className?: string;
-}
+
+
 
 const fadeVariants = {
   initial: {
@@ -26,7 +23,7 @@ const fadeVariants = {
   },
 };
 
-export default function PageTransition({ children, className = '' }: PageTransitionProps) {
+export default function PageTransition({ children, className = '' }) {
   return (
     <motion.div
       initial="initial"

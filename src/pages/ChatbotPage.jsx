@@ -4,24 +4,16 @@ import useAuthStore from '@/store/authStore';
 import apiClient from '@/lib/apiClient';
 import { MessageSquarePlus, MessageSquare, Trash2, ArrowLeft, PanelLeft, Trash, Send, Loader2 } from 'lucide-react';
 
-interface Message {
-  role: 'user' | 'assistant';
-  content: string;
-}
 
-interface Chat {
-  id: string;
-  title: string;
-  messages: Message[];
-  createdAt: number;
-}
 
-const DEFAULT_MSG: Message = {
+
+
+const DEFAULT_MSG = {
   role: 'assistant',
   content: 'Hello! I am the Kodemy AI Assistant. How can I help you with your learning today?'
 };
 
-function createLocalChat(): Chat {
+function createLocalChat() {
   return {
     id: crypto.randomUUID(),
     title: 'New Chat',
@@ -33,18 +25,18 @@ function createLocalChat(): Chat {
 // --- Guest mode helpers (localStorage only) ---
 function getGuestKey() { return 'kodemy_guest_chats_v3'; }
 
-function loadGuestChats(): Chat[] {
+function loadGuestChats() {
   try {
     const saved = localStorage.getItem(getGuestKey());
     if (saved) {
-      const parsed = JSON.parse(saved) as Chat[];
+      const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) return parsed;
     }
   } catch {}
   return [createLocalChat()];
 }
 
-function saveGuestChats(chats: Chat[]) {
+function saveGuestChats(chats) {
   try {
     localStorage.setItem(getGuestKey(), JSON.stringify(chats));
   } catch {}
@@ -54,15 +46,15 @@ function saveGuestChats(chats: Chat[]) {
 export default function ChatbotPage() {
   const { user, isAuthenticated } = useAuthStore();
 
-  const [chats, setChats] = useState<Chat[]>([]);
-  const [activeChatId, setActiveChatId] = useState<string>('');
+  const [chats, setChats] = useState([]);
+  const [activeChatId, setActiveChatId] = useState('');
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 768);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const messagesEndRef = useRef(null);
+  const textareaRef = useRef(null);
 
   const activeChat = chats.find(c => c.id === activeChatId) ?? chats[0];
 
@@ -70,11 +62,11 @@ export default function ChatbotPage() {
   const loadChats = useCallback(async () => {
     if (isAuthenticated && user) {
       setSyncing(true);
-      let serverChats: Chat[] = [];
+      let serverChats = [];
 
       try {
         const { data } = await apiClient.get('/chats');
-        serverChats = data as Chat[];
+        serverChats = data;
       } catch {
         // GET failed — fall back to guest chats so user isn't blocked
         const local = loadGuestChats();
@@ -97,7 +89,7 @@ export default function ChatbotPage() {
             id: fresh.id,
             title: fresh.title,
             createdAt: fresh.createdAt,
-            initialMessage: DEFAULT_MSG,
+            initialMessage,
           });
         } catch { /* self-heals on first message via INSERT IGNORE */ }
       } else {
@@ -168,13 +160,13 @@ export default function ChatbotPage() {
           id: newChat.id,
           title: newChat.title,
           createdAt: newChat.createdAt,
-          initialMessage: DEFAULT_MSG,
+          initialMessage,
         });
       } catch { /* ignore */ }
     }
   };
 
-  const handleDeleteChat = async (id: string, e: React.MouseEvent) => {
+  const handleDeleteChat = async (id, e) => {
     e.stopPropagation();
     setChats(prev => {
       const remaining = prev.filter(c => c.id !== id);
@@ -196,11 +188,11 @@ export default function ChatbotPage() {
     }
   };
 
-  const updateLocalChat = (chatIdToUpdate: string, updater: (chat: Chat) => Chat) => {
+  const updateLocalChat = (chatIdToUpdate, updater) => {
     setChats(prev => prev.map(c => c.id === chatIdToUpdate ? updater(c) : c));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim() || loading) return;
 
@@ -252,7 +244,7 @@ export default function ChatbotPage() {
 
     try {
       const token = useAuthStore.getState().accessToken;
-      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+      const headers = { 'Content-Type': 'application/json' };
       if (token) {
         headers['Authorization'] = `Bearer ${token}`;
       }
@@ -320,7 +312,7 @@ export default function ChatbotPage() {
           }
         }
       }
-    } catch (e: any) {
+    } catch (e) {
       aiText = e.message || "Sorry, I'm having trouble connecting to the AI server right now. Please try again.";
       updateLocalChat(chatId, chat => {
         const newChat = { ...chat };
@@ -344,7 +336,7 @@ export default function ChatbotPage() {
     // Stop the three-dot loader and start streaming
   };
 
-  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleInput = (e) => {
     setInput(e.target.value);
     e.target.style.height = 'auto';
     e.target.style.height = `${Math.min(e.target.scrollHeight, 200)}px`;

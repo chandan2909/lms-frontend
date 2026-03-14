@@ -4,25 +4,11 @@ import apiClient from '../lib/apiClient';
 // Import the store (not just the hook) so we can call getState() outside React
 import useCartStore from './cartStore';
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  created_at: string;
-}
 
-interface AuthState {
-  accessToken: string | null;
-  isAuthenticated: boolean;
-  user: User | null;
-  setAccessToken: (token: string) => void;
-  setUser: (user: User) => void;
-  fetchUser: () => Promise<void>;
-  logout: () => void;
-  deleteAccount: () => Promise<void>;
-}
 
-const useAuthStore = create<AuthState>()(
+
+
+const useAuthStore = create()(
   persist(
     (set) => ({
       accessToken: null,

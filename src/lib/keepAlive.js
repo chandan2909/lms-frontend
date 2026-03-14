@@ -10,7 +10,7 @@ const PING_INTERVAL_MS = 14 * 60 * 1000; // 14 minutes
 const BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace(/\/api$/, '');
 const PING_URL = `${BASE_URL}/api/health`;
 
-let intervalId: ReturnType<typeof setInterval> | null = null;
+let intervalId = null;
 
 async function ping() {
   try {

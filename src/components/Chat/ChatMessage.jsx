@@ -1,11 +1,8 @@
 import ReactMarkdown from 'react-markdown';
 
-interface ChatMessageProps {
-  role: 'user' | 'assistant';
-  content: string;
-}
 
-export default function ChatMessage({ role, content }: ChatMessageProps) {
+
+export default function ChatMessage({ role, content }) {
   const isUser = role === 'user';
   
   return (

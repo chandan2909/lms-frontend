@@ -4,27 +4,16 @@ import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import { Check, Lock } from 'lucide-react';
 
-interface LocationState {
-  amount: number;
-  originalAmount: number;
-  itemCount: number;
-  courseTitle?: string;
-  onSuccessAction: 'cart' | 'single';
-  subjectId?: number;
-}
-
-type PaymentMethod = 'card' | 'upi' | 'netbanking' | 'wallet';
-
 const BANKS = [
   'State Bank of India', 'HDFC Bank', 'ICICI Bank', 'Axis Bank',
   'Kotak Mahindra Bank', 'Punjab National Bank', 'Bank of Baroda', 'Union Bank of India',
 ];
 const WALLETS = ['Paytm', 'PhonePe', 'Amazon Pay', 'Mobikwik'];
 
-function formatCard(val: string) {
+function formatCard(val) {
   return val.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim();
 }
-function formatExpiry(val: string) {
+function formatExpiry(val) {
   const d = val.replace(/\D/g, '').slice(0, 4);
   return d.length >= 3 ? `${d.slice(0, 2)}/${d.slice(2)}` : d;
 }
@@ -35,9 +24,8 @@ const errCls = 'border-red-400 focus:border-red-400 focus:ring-red-400';
 export default function CheckoutPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const state = location.state as LocationState | null;
+  const state = location.state || null;
 
-  // If navigated without state, go home
   if (!state) {
     navigate('/');
     return null;
@@ -45,8 +33,8 @@ export default function CheckoutPage() {
 
   const { amount, originalAmount, itemCount, courseTitle, onSuccessAction, subjectId } = state;
 
-  const [method, setMethod] = useState<PaymentMethod>('card');
-  const [step, setStep] = useState<'form' | 'processing' | 'success'>('form');
+  const [method, setMethod] = useState('card');
+  const [step, setStep] = useState('form');
 
   const [name, setName]     = useState('');
   const [email, setEmail]   = useState('');
@@ -60,10 +48,10 @@ export default function CheckoutPage() {
   const [bank, setBank]     = useState('');
   const [wallet, setWallet] = useState('');
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState({});
 
-  const validate = (): boolean => {
-    const e: Record<string, string> = {};
+  const validate = () => {
+    const e = {};
     if (!name.trim()) e.name = 'Full name is required';
     if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) e.email = 'Valid email required';
     if (!phone.match(/^[6-9]\d{9}$/)) e.phone = 'Valid 10-digit mobile number required';
@@ -86,11 +74,9 @@ export default function CheckoutPage() {
     if (!validate()) return;
     setStep('processing');
 
-    // Simulate payment processing
     await new Promise(r => setTimeout(r, 2000));
 
     try {
-      // Dynamic import to avoid circular deps — we call the store directly
       const { default: useCartStore } = await import('@/store/cartStore');
       const store = useCartStore.getState();
 
@@ -100,14 +86,14 @@ export default function CheckoutPage() {
         await store.purchaseSingle(subjectId);
       }
     } catch {
-      // ignore — still show success screen
+      // ignore
     }
 
     setStep('success');
     setTimeout(() => navigate('/profile'), 3000);
   };
 
-  const methods: { id: PaymentMethod; label: string; emoji: string }[] = [
+  const paymentMethods = [
     { id: 'card', label: 'Credit / Debit Card', emoji: '💳' },
     { id: 'upi', label: 'UPI', emoji: '📱' },
     { id: 'netbanking', label: 'Net Banking', emoji: '🏦' },
@@ -158,7 +144,6 @@ export default function CheckoutPage() {
     <div className="min-h-screen bg-[#f7f9fa] flex flex-col">
       <Header />
       <main className="flex-grow pt-[72px]">
-        {/* Page header */}
         <div className="bg-[#1c1d1f] text-white py-8">
           <div className="max-w-5xl mx-auto px-6">
             <h1 className="text-2xl font-bold font-serif mb-1">Checkout</h1>
@@ -171,11 +156,7 @@ export default function CheckoutPage() {
 
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-6 md:py-10">
           <div className="flex flex-col-reverse lg:flex-row gap-6 md:gap-8">
-
-            {/* ── Left Column: Payment Form ── */}
             <div className="flex-1 space-y-4 md:space-y-6">
-
-              {/* Contact Details */}
               <div className="bg-white border border-gray-200 rounded-lg p-4 md:p-6">
                 <h2 className="text-base font-bold text-[#1c1d1f] mb-4 pb-3 border-b border-gray-100">Contact Details</h2>
                 <div className="space-y-4">
@@ -202,13 +183,10 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* Payment Method */}
               <div className="bg-white border border-gray-200 rounded-lg p-4 md:p-6">
                 <h2 className="text-base font-bold text-[#1c1d1f] mb-4 pb-3 border-b border-gray-100">Payment Method</h2>
-
-                {/* Method tabs */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-6">
-                  {methods.map(m => (
+                  {paymentMethods.map(m => (
                     <button key={m.id} onClick={() => setMethod(m.id)}
                       className={`flex flex-col items-center gap-1.5 py-3 px-2 rounded border text-xs font-bold transition-all ${
                         method === m.id
@@ -221,7 +199,6 @@ export default function CheckoutPage() {
                   ))}
                 </div>
 
-                {/* Card */}
                 {method === 'card' && (
                   <div className="space-y-4">
                     <div>
@@ -248,7 +225,6 @@ export default function CheckoutPage() {
                   </div>
                 )}
 
-                {/* UPI */}
                 {method === 'upi' && (
                   <div className="space-y-4">
                     <div>
@@ -270,7 +246,6 @@ export default function CheckoutPage() {
                   </div>
                 )}
 
-                {/* Net Banking */}
                 {method === 'netbanking' && (
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-2">
@@ -292,7 +267,6 @@ export default function CheckoutPage() {
                   </div>
                 )}
 
-                {/* Wallet */}
                 {method === 'wallet' && (
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-2">
@@ -309,11 +283,9 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* ── Right Column: Order Summary ── */}
             <div className="lg:w-[340px] flex-shrink-0">
               <div className="bg-white border border-gray-200 rounded-lg p-4 md:p-6 lg:sticky lg:top-[90px]">
                 <h2 className="text-base font-bold text-[#1c1d1f] mb-4 pb-3 border-b border-gray-100">Order Summary</h2>
-
                 <div className="space-y-3 mb-4">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Original Price</span>
@@ -363,7 +335,6 @@ export default function CheckoutPage() {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </main>

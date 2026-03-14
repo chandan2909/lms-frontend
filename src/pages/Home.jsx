@@ -8,7 +8,7 @@ import { PlayCircle, Star } from 'lucide-react';
 
 export default function Home() {
   const { isAuthenticated } = useAuthStore();
-  const [subjects, setSubjects] = useState<any[]>([]);
+  const [subjects, setSubjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -19,16 +19,16 @@ export default function Home() {
       .finally(() => setLoading(false));
   }, []);
 
-  const seededRandom = (seed: number) => {
+  const seededRandom = (seed) => {
     let x = Math.sin(seed * 9301 + 49297) * 233280;
     return x - Math.floor(x);
   };
 
   const priceOptions = [999, 1299, 1499, 1999, 2499, 3499, 4999, 7999, 9999];
-  const getCoursePrice = (id: number) => priceOptions[Math.floor(seededRandom(id) * priceOptions.length)];
-  const getOriginalPrice = (id: number) => Math.round(getCoursePrice(id) * (3 + seededRandom(id + 100) * 4));
-  const getCourseRating = (id: number) => (4 + seededRandom(id + 200) * 0.9).toFixed(1);
-  const getCourseStudents = (id: number) => Math.floor(seededRandom(id + 300) * 150000) + 5000;
+  const getCoursePrice = (id) => priceOptions[Math.floor(seededRandom(id) * priceOptions.length)];
+  const getOriginalPrice = (id) => Math.round(getCoursePrice(id) * (3 + seededRandom(id + 100) * 4));
+  const getCourseRating = (id) => (4 + seededRandom(id + 200) * 0.9).toFixed(1);
+  const getCourseStudents = (id) => Math.floor(seededRandom(id + 300) * 150000) + 5000;
 
   const stats = [
     { value: '5+', label: 'Expert courses' },
@@ -153,8 +153,8 @@ export default function Home() {
                         alt={subject.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         onError={(e) => {
-                          (e.currentTarget as HTMLImageElement).style.display = 'none';
-                          (e.currentTarget.nextElementSibling as HTMLElement).style.display = 'flex';
+                          (e.currentTarget).style.display = 'none';
+                          (e.currentTarget.nextElementSibling).style.display = 'flex';
                         }}
                       />
                     ) : null}

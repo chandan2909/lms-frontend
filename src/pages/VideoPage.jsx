@@ -9,20 +9,20 @@ export default function VideoPage() {
   const { subjectId, videoId } = useParams();
   const navigate = useNavigate();
   
-  const parsedSubjectId = parseInt(subjectId as string, 10);
-  const parsedVideoId = parseInt(videoId as string, 10);
+  const parsedSubjectId = parseInt(subjectId, 10);
+  const parsedVideoId = parseInt(videoId, 10);
   
-  const [videoData, setVideoData] = useState<any>(null);
+  const [videoData, setVideoData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [completionMarked, setCompletionMarked] = useState(false);
-  const [autoPlayCountdown, setAutoPlayCountdown] = useState<number | null>(null);
+  const [autoPlayCountdown, setAutoPlayCountdown] = useState(null);
   
   const { markVideoCompleted } = useSidebarStore();
-  const progressInterval = useRef<any>(null);
-  const autoPlayTimerRef = useRef<any>(null);
-  const playerRef = useRef<any>(null);
-  const videoDataRef = useRef<any>(null);
+  const progressInterval = useRef(null);
+  const autoPlayTimerRef = useRef(null);
+  const playerRef = useRef(null);
+  const videoDataRef = useRef(null);
 
   useEffect(() => {
     videoDataRef.current = videoData;
@@ -40,7 +40,7 @@ export default function VideoPage() {
         if (data.is_completed) {
             setCompletionMarked(true);
         }
-      } catch (err: any) {
+      } catch (err) {
         if (err.response?.status === 403) {
            setError('This video is locked. Please complete the previous videos first.');
         } else {
@@ -75,12 +75,12 @@ export default function VideoPage() {
     };
   }, [autoPlayCountdown, videoData?.next_video_id, navigate, parsedSubjectId]);
 
-  const handleProgress = async (currentTime: number, isFinished: boolean) => {
+  const handleProgress = async (currentTime, isFinished) => {
     try {
       await apiClient.post(`/progress/videos/${parsedVideoId}`, {
         videoId: parsedVideoId,
         subjectId: parsedSubjectId,
-        last_position_seconds: Math.floor(currentTime),
+        last_position_seconds: currentTime,
         is_completed: isFinished
       });
 
@@ -99,7 +99,7 @@ export default function VideoPage() {
     }
   };
 
-  const onPlayerReady = (event: any) => {
+  const onPlayerReady = (event) => {
     playerRef.current = event.target;
     progressInterval.current = setInterval(() => {
         if (playerRef.current && playerRef.current.getPlayerState() === 1) { // 1 is playing
@@ -115,15 +115,13 @@ export default function VideoPage() {
   const onVideoEnd = () => {
     if (playerRef.current) {
       const duration = playerRef.current.getDuration();
-      // Autoplay is triggered inside handleProgress to avoid stale closure issues
       handleProgress(duration, true);
     }
   };
 
-  const onStateChange = (state: number) => {
+  const onStateChange = (state) => {
      if (state === 2 && playerRef.current) {
         const currentTime = playerRef.current.getCurrentTime();
-        // duration is not needed here
         handleProgress(currentTime, false);
      }
   };
@@ -155,7 +153,7 @@ export default function VideoPage() {
              </p>
              {videoData?.unlock_reason && (
                 <p className="text-sm text-[#cec0fc] mt-4 italic">
-                   Reason: {videoData.unlock_reason}
+                   {videoData.unlock_reason}
                 </p>
              )}
           </div>
@@ -173,10 +171,7 @@ export default function VideoPage() {
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-6 lg:p-8 w-full bg-[#1c1d1f] lg:min-h-full flex flex-col">
       <div className="w-full mx-auto relative group">
-        {/* Video + embedded nav buttons */}
         <div className="w-full rounded-lg overflow-hidden shadow-2xl border border-gray-800 relative">
-
-          {/* Previous button - overlaid on left edge of video */}
           {videoData.previous_video_id && (
             <button
               onClick={() => navigate(`/subjects/${parsedSubjectId}/video/${videoData.previous_video_id}`)}
@@ -187,7 +182,6 @@ export default function VideoPage() {
             </button>
           )}
 
-          {/* Next button - overlaid on right edge of video */}
           {videoData.next_video_id && (
             <button
               onClick={() => navigate(`/subjects/${parsedSubjectId}/video/${videoData.next_video_id}`)}
@@ -211,7 +205,6 @@ export default function VideoPage() {
             onReady={onPlayerReady}
           />
 
-          {/* Auto-play Overlay */}
           {autoPlayCountdown !== null && (
             <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center z-20 backdrop-blur-sm transition-all duration-300">
               <div className="text-center p-8 rounded-xl bg-[#2d2f31] border border-white/10 shadow-2xl">

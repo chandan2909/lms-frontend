@@ -1,12 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Lock, CheckCircle, PlayCircle } from 'lucide-react';
 
-interface SectionItemProps {
-  section: any;
-  subjectId: number;
-}
 
-export default function SectionItem({ section, subjectId }: SectionItemProps) {
+
+export default function SectionItem({ section, subjectId }) {
   const { pathname } = useLocation();
 
   return (
@@ -15,7 +12,7 @@ export default function SectionItem({ section, subjectId }: SectionItemProps) {
         {section.title}
       </h4>
       <div className="flex flex-col pb-2">
-        {section.videos.map((video: any) => {
+        {section.videos.map((video) => {
           const isActive = pathname.includes(`/video/${video.id}`);
           
           if (video.locked && !isActive) {

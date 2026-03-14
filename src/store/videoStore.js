@@ -1,19 +1,8 @@
 import { create } from 'zustand';
 
-interface VideoState {
-  currentVideoId: number | null;
-  subjectId: number | null;
-  currentTime: number;
-  duration: number;
-  isPlaying: boolean;
-  isCompleted: boolean;
-  nextVideoId: number | null;
-  prevVideoId: number | null;
-  setVideoState: (state: Partial<VideoState>) => void;
-  reset: () => void;
-}
 
-const useVideoStore = create<VideoState>((set) => ({
+
+const useVideoStore = create((set) => ({
   currentVideoId: null,
   subjectId: null,
   currentTime: 0,

@@ -39,6 +39,7 @@ function AnimatedRoutes() {
 }
 
 function App() {
+  console.log('App component rendering');
   // Ping the Render backend every 14 minutes so the free-tier instance
   // never spins down due to inactivity.
   useEffect(() => {

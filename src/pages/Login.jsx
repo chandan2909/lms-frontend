@@ -4,36 +4,26 @@ import apiClient from '@/lib/apiClient';
 import useAuthStore from '@/store/authStore';
 import Header from '@/components/Layout/Header';
 
-export default function RegisterPage() {
-  const [name, setName] = useState('');
+export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
   const navigate = useNavigate();
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setError('Passwords do not match.');
-      return;
-    }
     setError('');
     setLoading(true);
 
     try {
-      const { data } = await apiClient.post('/auth/register', { name, email, password });
+      const { data } = await apiClient.post('/auth/login', { email, password });
       setAccessToken(data.accessToken);
       navigate('/');
-    } catch (err: any) {
-      if (err.response?.data?.details) {
-         setError(err.response.data.details[0].message);
-      } else {
-         setError(err.response?.data?.error || 'Registration failed.');
-      }
+    } catch (err) {
+      setError(err.response?.data?.error || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
     }
@@ -45,8 +35,8 @@ export default function RegisterPage() {
       <div className="flex flex-col items-center justify-center flex-grow px-4">
         <div className="w-full max-w-sm space-y-8">
           <div className="text-center">
-            <h1 className="text-3xl font-semibold tracking-tight text-[#1c1d1f]">Create an account</h1>
-            <p className="mt-2 text-sm text-gray-500">Start learning today</p>
+            <h1 className="text-3xl font-semibold tracking-tight text-[#1c1d1f]">Welcome back</h1>
+            <p className="mt-2 text-sm text-gray-500">Sign in to your account</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4 mt-8">
@@ -56,18 +46,6 @@ export default function RegisterPage() {
               </div>
             )}
             
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 text-left">Full Name</label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black text-black"
-                placeholder="John Doe"
-              />
-            </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1 text-left">Email</label>
               <input
@@ -87,22 +65,7 @@ export default function RegisterPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                minLength={6}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black text-black"
-                placeholder="Minimum 6 characters"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 text-left">Confirm Password</label>
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                minLength={6}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black text-black"
-                placeholder="Re-enter your password"
               />
             </div>
 
@@ -111,14 +74,14 @@ export default function RegisterPage() {
               disabled={loading}
               className="w-full mt-6 bg-black text-white whitespace-nowrap py-2 rounded-md hover:bg-gray-800 transition-colors disabled:opacity-50 font-bold"
             >
-              {loading ? 'Creating account...' : 'Create account'}
+              {loading ? 'Signing in...' : 'Sign in'}
             </button>
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-6">
-            Already have an account?{' '}
-            <Link to="/auth/login" className="text-black hover:underline font-medium">
-              Sign in
+            Don't have an account?{' '}
+            <Link to="/auth/register" className="text-black hover:underline font-medium">
+              Sign up
             </Link>
           </p>
         </div>

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import useSidebarStore from '@/store/sidebarStore';
 import SectionItem from './SectionItem';
 
-export default function SubjectSidebar({ subjectId }: { subjectId: number }) {
+export default function SubjectSidebar({ subjectId }) {
   const { tree, loading, error, fetchTree } = useSidebarStore();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function SubjectSidebar({ subjectId }: { subjectId: number }) {
         {tree.sections.length === 0 ? (
           <p className="text-sm text-gray-500 text-center py-4">No content yet.</p>
         ) : (
-          tree.sections.map((section: any) => (
+          tree.sections.map((section) => (
             <SectionItem key={section.id} section={section} subjectId={subjectId} />
           ))
         )}

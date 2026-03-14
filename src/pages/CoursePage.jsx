@@ -12,19 +12,17 @@ export default function CoursePage() {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthStore();
   const { addItem, isInCart, isPurchased } = useCartStore();
-  const parsedId = parseInt(subjectId as string, 10);
+  const parsedId = parseInt(subjectId, 10);
 
-  const [subject, setSubject] = useState<any>(null);
-  const [sections, setSections] = useState<any[]>([]);
+  const [subject, setSubject] = useState(null);
+  const [sections, setSections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [addedToCart, setAddedToCart] = useState(false);
-  // Track enrollment from backend (source of truth) OR cartStore (optimistic)
   const [enrolled, setEnrolled] = useState(false);
 
-  // cartStore acts as an optimistic local cache; backend is the source of truth
   const inCart = isInCart(parsedId);
 
-  const getGradient = (id: number) => {
+  const getGradient = (id) => {
     const gradients = [
       'from-purple-500 to-indigo-600',
       'from-blue-500 to-cyan-500',
@@ -35,8 +33,7 @@ export default function CoursePage() {
     return gradients[id % gradients.length];
   };
 
-  // Seeded pseudo-random for consistent but varied prices per course
-  const seededRandom = (seed: number) => {
+  const seededRandom = (seed) => {
     let x = Math.sin(seed * 9301 + 49297) * 233280;
     return x - Math.floor(x);
   };
@@ -54,7 +51,7 @@ export default function CoursePage() {
     const fetchData = async () => {
       try {
         const { data } = await apiClient.get(`/subjects`);
-        const found = data.find((s: any) => s.id === parsedId);
+        const found = data.find((s) => s.id === parsedId);
         setSubject(found || { id: parsedId, title: 'Course', description: '' });
 
         try {
@@ -72,18 +69,15 @@ export default function CoursePage() {
     fetchData();
   }, [parsedId]);
 
-  // Always check enrollment status from backend — it's the only source of truth.
-  // localStorage (isPurchased) can be stale across logins, so we never rely on it alone.
   useEffect(() => {
     if (!isAuthenticated) {
       setEnrolled(false);
       return;
     }
     apiClient.get('/progress/overview').then(({ data }) => {
-      const isEnrolled = data.some((course: any) => course.subject_id === parsedId);
+      const isEnrolled = data.some((course) => course.subject_id === parsedId);
       setEnrolled(isEnrolled);
     }).catch(() => {
-      // If backend fails, fall back to local cache
       setEnrolled(isPurchased(parsedId));
     });
   }, [parsedId, isAuthenticated]);
@@ -137,16 +131,14 @@ export default function CoursePage() {
     );
   }
 
-  const totalVideos = sections.reduce((acc: number, s: any) => acc + (s.videos?.length || 0), 0);
+  const totalVideos = sections.reduce((acc, s) => acc + (s.videos?.length || 0), 0);
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Header />
 
-      {/* Dark Hero Banner */}
       <div className="bg-[#1c1d1f] pt-[72px]">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-10 flex flex-col lg:flex-row gap-6 md:gap-8">
-          {/* Left: Course Info */}
           <div className="flex-1 text-white text-left">
             <h1 className="text-2xl md:text-3xl font-bold mb-4 leading-tight">{subject?.title}</h1>
             <p className="text-base md:text-lg text-gray-300 mb-4 max-w-xl">
@@ -178,17 +170,15 @@ export default function CoursePage() {
             </div>
           </div>
 
-          {/* Right: Purchase Card */}
           <div className="lg:w-[380px] flex-shrink-0">
             <div className="bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-200">
-              {/* Thumbnail */}
               <div className={`w-full aspect-video bg-gradient-to-br ${getGradient(parsedId)} relative overflow-hidden`}>
                 {subject?.thumbnail_url ? (
                   <img
                     src={subject.thumbnail_url}
                     alt={subject?.title}
                     className="w-full h-full object-cover"
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                 ) : (
                   <PlayCircle className="w-16 h-16 text-white opacity-60 absolute inset-0 m-auto" />
@@ -196,7 +186,6 @@ export default function CoursePage() {
               </div>
 
               <div className="p-6">
-                {/* Price */}
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-3xl font-bold text-[#1c1d1f]">₹{fakePrice.toLocaleString('en-IN')}</span>
                   <span className="text-lg text-gray-500 line-through">₹{fakeOriginal.toLocaleString('en-IN')}</span>
@@ -205,13 +194,11 @@ export default function CoursePage() {
                   </span>
                 </div>
 
-                {/* Timer */}
                 <p className="text-sm text-red-600 font-medium mb-4 flex items-center gap-1">
                   <Clock className="w-4 h-4" />
                   <span className="font-bold">2 days</span> left at this price!
                 </p>
 
-                {/* Buttons */}
                 {enrolled ? (
                   <button
                     onClick={handleStartLearning}
@@ -251,12 +238,9 @@ export default function CoursePage() {
                   </div>
                 )}
 
-
-                {/* Money-back */}
                 <p className="text-xs text-gray-500 text-center">30-Day Money-Back Guarantee</p>
                 <p className="text-xs text-gray-500 text-center">Full Lifetime Access</p>
 
-                {/* Includes */}
                 <div className="mt-5 pt-5 border-t border-gray-200">
                   <h4 className="font-bold text-sm text-[#1c1d1f] mb-3">This course includes:</h4>
                   <ul className="space-y-2 text-sm text-gray-600">
@@ -284,7 +268,6 @@ export default function CoursePage() {
         </div>
       </div>
 
-      {/* Course Content Section */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12 w-full text-left">
         <h2 className="text-xl md:text-2xl font-bold text-[#1c1d1f] mb-2">Course content</h2>
         <p className="text-sm text-gray-500 mb-6">
@@ -295,7 +278,7 @@ export default function CoursePage() {
           {sections.length === 0 ? (
             <div className="p-8 text-center text-gray-400">No content available yet.</div>
           ) : (
-            sections.map((section: any, idx: number) => (
+            sections.map((section, idx) => (
               <div key={section.id} className={idx > 0 ? 'border-t border-gray-200' : ''}>
                 <div className="bg-[#f7f9fa] px-5 py-4 flex justify-between items-center cursor-pointer hover:bg-gray-100">
                   <div className="flex items-center gap-2">
@@ -305,7 +288,7 @@ export default function CoursePage() {
                   <span className="text-xs text-gray-500">{section.videos?.length || 0} lectures</span>
                 </div>
                 <div className="bg-white">
-                  {section.videos?.map((video: any) => (
+                  {section.videos?.map((video) => (
                     <div key={video.id} className="flex items-center gap-3 px-8 py-3 text-sm text-gray-700 border-t border-gray-100">
                       <PlayCircle className="w-4 h-4 text-gray-400 flex-shrink-0" />
                       <span>{video.title}</span>
@@ -317,7 +300,6 @@ export default function CoursePage() {
           )}
         </div>
 
-        {/* What you'll learn */}
         <div className="mt-8 md:mt-12 border border-gray-200 rounded-lg p-5 md:p-8">
           <h2 className="text-xl md:text-2xl font-bold text-[#1c1d1f] mb-4 md:mb-5">What you'll learn</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">

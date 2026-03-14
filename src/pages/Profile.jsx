@@ -8,7 +8,7 @@ import useAuthStore from '@/store/authStore';
 import { PlayCircle, Award } from 'lucide-react';
 
 export default function ProfilePage() {
-  const [progress, setProgress] = useState<any[]>([]);
+  const [progress, setProgress] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('learning');
@@ -32,18 +32,17 @@ export default function ProfilePage() {
     fetchProgress();
   }, [fetchUser]);
 
-  // Pricing seed logic (identical to CoursePage to maintain consistency)
-  const seededRandom = (seed: number) => {
+  const seededRandom = (seed) => {
     let x = Math.sin(seed * 9301 + 49297) * 233280;
     return x - Math.floor(x);
   };
   const priceOptions = [999, 1299, 1499, 1999, 2499, 3499, 4999, 7999, 9999];
 
-  const getCoursePrice = (subjectId: number) => {
+  const getCoursePrice = (subjectId) => {
     return priceOptions[Math.floor(seededRandom(subjectId) * priceOptions.length)];
   };
 
-  const getCourseOriginalPrice = (subjectId: number, basePrice: number) => {
+  const getCourseOriginalPrice = (subjectId, basePrice) => {
     const originalMultiplier = 3 + seededRandom(subjectId + 100) * 4;
     return Math.round(basePrice * originalMultiplier);
   };
@@ -57,7 +56,6 @@ export default function ProfilePage() {
       <div className="min-h-screen bg-[#f7f9fa] flex flex-col">
         <Header />
         
-        {/* User Banner */}
         <div className="bg-[#1c1d1f] text-white pt-[112px] pb-[40px]">
           <div className="max-w-5xl mx-auto px-4 md:px-6 flex items-center gap-4 md:gap-6">
             <div className="w-16 h-16 md:w-24 md:h-24 bg-[#2d2f31] rounded-full flex items-center justify-center text-2xl md:text-4xl font-bold font-serif border-4 border-[#3e4143]">
@@ -71,7 +69,6 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* Profile Navigation */}
         <div className="bg-white border-b border-gray-200 sticky top-[72px] z-40">
            <div className="max-w-5xl mx-auto px-4 md:px-6 flex gap-4 md:gap-8 overflow-x-auto hide-scrollbar whitespace-nowrap">
               {['learning', 'certificates', 'history', 'settings'].map((tab) => (
@@ -92,7 +89,6 @@ export default function ProfilePage() {
            </div>
         </div>
 
-        {/* Main Content Area */}
         <main className="max-w-5xl mx-auto px-4 md:px-6 py-8 md:py-12 w-full text-[#1c1d1f] flex-grow">
           {activeTab === 'learning' && (
              <>
@@ -113,13 +109,12 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                  {progress.map((p: any) => (
+                  {progress.map((p) => (
                     <Link 
                       key={p.subject_id}
                       to={`/subjects/${p.subject_id}`}
                       className="group flex flex-col h-full bg-white border border-gray-200 hover:border-black transition-colors cursor-pointer text-left"
                     >
-                      {/* Thumbnail */}
                       <div className="w-full aspect-video bg-[#2d2f31] relative overflow-hidden">
                         {p.thumbnail_url ? (
                           <img
@@ -127,12 +122,10 @@ export default function ProfilePage() {
                             alt={p.subject_title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             onError={(e) => {
-                              const img = e.currentTarget as HTMLImageElement;
+                              const img = e.currentTarget;
                               const current = img.src;
                               if (current.includes('hqdefault')) {
                                 img.src = current.replace('hqdefault', 'sddefault');
-                              } else if (current.includes('sddefault')) {
-                                img.style.display = 'none';
                               } else {
                                 img.style.display = 'none';
                               }
@@ -153,10 +146,10 @@ export default function ProfilePage() {
                         <div className="mt-auto">
                           <div className="flex justify-between items-center mb-1">
                              <span className="text-xs font-bold text-gray-600">
-                               {Math.round(p.completion_percentage)}% complete
+                                {Math.round(p.completion_percentage)}% complete
                              </span>
                              <span className="text-xs text-gray-500">
-                               {p.completed_videos}/{p.total_videos} lessons
+                                {p.completed_videos}/{p.total_videos} lessons
                              </span>
                           </div>
                           <div className="w-full bg-gray-200 h-1.5 mb-2 overflow-hidden">
@@ -174,7 +167,7 @@ export default function ProfilePage() {
              </>
           )}
 
-          {activeTab === 'certificates' && (
+          {activeTab === 'certificates' && (activeTab === 'certificates') && (
              <div className="bg-white border border-gray-200 rounded p-12 text-center text-gray-500 font-medium">
                 <Award className="w-16 h-16 mx-auto text-gray-300 mb-4" />
                 <p>No certificates earned yet.</p>
@@ -193,7 +186,7 @@ export default function ProfilePage() {
                   </div>
                 ) : (
                   <div className="divide-y divide-gray-200">
-                    {progress.map((p: any) => {
+                    {progress.map((p) => {
                       const price = getCoursePrice(p.subject_id);
                       const purchaseDate = p.enrolled_at 
                         ? new Date(p.enrolled_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
@@ -201,21 +194,19 @@ export default function ProfilePage() {
                       
                       return (
                         <div key={p.subject_id} className="p-4 md:p-6 flex flex-col md:flex-row gap-4 md:gap-6 items-start md:items-center hover:bg-gray-50 transition-colors">
-                          {/* Thumbnail */}
                           <div className="w-full md:w-48 aspect-video bg-[#2d2f31] flex-shrink-0 relative">
                             {p.thumbnail_url ? (
                                <img
                                  src={p.thumbnail_url}
                                  alt={p.subject_title}
                                  className="w-full h-full object-cover"
-                                 onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
                                />
                              ) : (
                                <PlayCircle className="w-8 h-8 text-white opacity-50 absolute inset-0 m-auto" />
                              )}
                           </div>
                           
-                          {/* Details */}
                           <div className="flex-grow min-w-0 flex flex-col items-start gap-1">
                             <Link to={`/subjects/${p.subject_id}`} className="text-base md:text-lg font-bold text-[#1c1d1f] hover:text-[#5624d0] hover:underline line-clamp-2">
                               {p.subject_title || 'Course'}
@@ -227,7 +218,6 @@ export default function ProfilePage() {
                             </div>
                           </div>
 
-                          {/* Price */}
                           <div className="flex flex-row md:flex-col items-end gap-2 md:gap-0 mt-2 md:mt-0 right-0">
                             <span className="text-lg font-bold text-[#1c1d1f]">₹{price.toLocaleString('en-IN')}</span>
                             <span className="text-sm text-[#0056d2] hover:underline cursor-pointer font-medium mt-1">Receipt</span>

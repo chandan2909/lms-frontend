@@ -5,7 +5,7 @@ import Header from '@/components/Layout/Header';
 
 export default function SubjectLayout() {
   const { subjectId } = useParams();
-  const parsedSubjectId = parseInt(subjectId as string, 10);
+  const parsedSubjectId = parseInt(subjectId, 10);
 
   return (
     <AuthGuard>

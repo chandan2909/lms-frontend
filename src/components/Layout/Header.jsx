@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import HeaderActions from './HeaderActions';
 import useCartStore from '@/store/cartStore';
 import { useState } from 'react';
-import { Menu, X, Home as HomeIcon, ShoppingCart } from 'lucide-react';
+import { Menu, X, Home, ShoppingCart } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Header() {
@@ -10,7 +10,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path) => location.pathname === path;
 
   return (
     <header className="fixed top-0 left-0 right-0 h-[72px] bg-white border-b border-gray-200 z-50 flex items-center px-4 md:px-6 gap-4 md:gap-6 shadow-sm">
@@ -44,7 +44,7 @@ export default function Header() {
           title="Home" 
           aria-label="Home"
         >
-          <HomeIcon className="w-6 h-6" />
+          <Home className="w-6 h-6" />
         </Link>
         
         {/* Cart Button */}

@@ -2,13 +2,13 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useAuthStore from '../../store/authStore';
 
-export default function HeaderActions({ isMobile, closeMenu }: { isMobile?: boolean, closeMenu?: () => void }) {
+export default function HeaderActions({ isMobile, closeMenu }) {
   const { isAuthenticated, logout, user } = useAuthStore();
   const [mounted, setMounted] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path) => location.pathname === path;
 
   // Avoid hydration error (still useful in some React patterns, though less critical than Next.js)
   useEffect(() => setMounted(true), []);

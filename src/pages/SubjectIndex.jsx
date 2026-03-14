@@ -5,7 +5,7 @@ import apiClient from '@/lib/apiClient';
 export default function SubjectIndex() {
   const { subjectId } = useParams();
   const navigate = useNavigate();
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getFirstVideo = async () => {
@@ -16,7 +16,7 @@ export default function SubjectIndex() {
         } else {
           setError('No videos found for this course.');
         }
-      } catch (err: any) {
+      } catch (err) {
         console.error('Failed to get first video:', err);
         setError('Failed to load course content.');
       }

@@ -1,15 +1,9 @@
 import { create } from 'zustand';
 import apiClient from '../lib/apiClient';
 
-interface SidebarState {
-  tree: any | null;
-  loading: boolean;
-  error: string | null;
-  fetchTree: (subjectId: number) => Promise<void>;
-  markVideoCompleted: (videoId: number) => void;
-}
 
-const useSidebarStore = create<SidebarState>((set, get) => ({
+
+const useSidebarStore = create((set, get) => ({
   tree: null,
   loading: false,
   error: null,
@@ -18,23 +12,23 @@ const useSidebarStore = create<SidebarState>((set, get) => ({
     try {
       const { data } = await apiClient.get(`/subjects/${subjectId}/tree`);
       set({ tree: data, loading: false });
-    } catch (err: any) {
+    } catch (err) {
       set({ error: err.message || 'Failed to fetch tree', loading: false });
     }
   },
-  markVideoCompleted: (videoId: number) => {
+  markVideoCompleted: (videoId) => {
     const { tree, fetchTree } = get();
     if (!tree) return;
     
     // Optimistic update
-    const updatedSections = tree.sections.map((section: any) => ({
+    const updatedSections = tree.sections.map((section) => ({
       ...section,
-      videos: section.videos.map((video: any) => 
+      videos: section.videos.map((video) => 
         video.id === videoId ? { ...video, is_completed: true } : video
       )
     }));
     
-    set({ tree: { ...tree, sections: updatedSections } });
+    set({ tree });
 
     // Refetch to get updated locked statuses from backend
     fetchTree(tree.id);
