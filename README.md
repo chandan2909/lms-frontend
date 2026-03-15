@@ -1,4 +1,4 @@
-# 🎓 LMS Frontend
+# 🎓 LMS
 
 Modern single-page application for the Learning Management System, built with **React** and **TypeScript**.
 
