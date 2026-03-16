@@ -122,10 +122,10 @@ export default function CoursePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a] transition-colors duration-200">
         <Header />
         <div className="flex-grow flex items-center justify-center pt-[72px]">
-          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#1c1d1f]"></div>
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#1c1d1f] dark:border-white"></div>
         </div>
       </div>
     );
@@ -134,7 +134,7 @@ export default function CoursePage() {
   const totalVideos = sections.reduce((acc, s) => acc + (s.videos?.length || 0), 0);
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a] transition-colors duration-200">
       <Header />
 
       <div className="bg-[#1c1d1f] pt-[72px]">
@@ -171,7 +171,7 @@ export default function CoursePage() {
           </div>
 
           <div className="lg:w-[380px] flex-shrink-0">
-            <div className="bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-200">
+            <div className="bg-white dark:bg-[#111111] rounded-lg shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-800 transition-colors duration-200">
               <div className={`w-full aspect-video bg-gradient-to-br ${getGradient(parsedId)} relative overflow-hidden`}>
                 {subject?.thumbnail_url ? (
                   <img
@@ -187,9 +187,9 @@ export default function CoursePage() {
 
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="text-3xl font-bold text-[#1c1d1f]">₹{fakePrice.toLocaleString('en-IN')}</span>
-                  <span className="text-lg text-gray-500 line-through">₹{fakeOriginal.toLocaleString('en-IN')}</span>
-                  <span className="text-sm font-bold text-[#1c1d1f] bg-[#eceb98] px-2 py-0.5">
+                  <span className="text-3xl font-bold text-[#1c1d1f] dark:text-gray-100">₹{fakePrice.toLocaleString('en-IN')}</span>
+                  <span className="text-lg text-gray-500 dark:text-gray-400 line-through">₹{fakeOriginal.toLocaleString('en-IN')}</span>
+                  <span className="text-sm font-bold text-[#1c1d1f] dark:text-black bg-[#eceb98] px-2 py-0.5">
                     {Math.round((1 - fakePrice / fakeOriginal) * 100)}% off
                   </span>
                 </div>
@@ -202,7 +202,7 @@ export default function CoursePage() {
                 {enrolled ? (
                   <button
                     onClick={handleStartLearning}
-                    className="w-full py-3 bg-[#1c1d1f] text-white font-bold text-base hover:bg-gray-800 transition-colors mb-3"
+                    className="w-full py-3 bg-[#1c1d1f] dark:bg-white text-white dark:text-[#1c1d1f] font-bold text-base hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors mb-3"
                   >
                     Start Learning →
                   </button>
@@ -210,21 +210,21 @@ export default function CoursePage() {
                   <>
                     <button
                       onClick={handleBuy}
-                      className="w-full py-3 bg-[#1c1d1f] text-white font-bold text-base hover:bg-gray-800 transition-colors mb-3"
+                      className="w-full py-3 bg-[#1c1d1f] dark:bg-white text-white dark:text-[#1c1d1f] font-bold text-base hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors mb-3"
                     >
                       Buy now
                     </button>
                     {inCart ? (
                       <button
                         onClick={() => navigate('/cart')}
-                        className="w-full py-3 bg-white text-[#1c1d1f] font-bold text-base border border-[#1c1d1f] hover:bg-[#f7f9fa] transition-colors mb-3"
+                        className="w-full py-3 bg-white dark:bg-[#111111] text-[#1c1d1f] dark:text-white font-bold text-base border border-[#1c1d1f] dark:border-white hover:bg-[#f7f9fa] dark:hover:bg-[#1a1a1a] transition-colors mb-3"
                       >
                         Go to cart
                       </button>
                     ) : (
                       <button
                         onClick={handleAddToCart}
-                        className="w-full py-3 bg-white text-[#1c1d1f] font-bold text-base border border-[#1c1d1f] hover:bg-[#f7f9fa] transition-colors mb-3"
+                        className="w-full py-3 bg-white dark:bg-[#111111] text-[#1c1d1f] dark:text-white font-bold text-base border border-[#1c1d1f] dark:border-white hover:bg-[#f7f9fa] dark:hover:bg-[#1a1a1a] transition-colors mb-3"
                       >
                         Add to cart
                       </button>
@@ -241,9 +241,9 @@ export default function CoursePage() {
                 <p className="text-xs text-gray-500 text-center">30-Day Money-Back Guarantee</p>
                 <p className="text-xs text-gray-500 text-center">Full Lifetime Access</p>
 
-                <div className="mt-5 pt-5 border-t border-gray-200">
-                  <h4 className="font-bold text-sm text-[#1c1d1f] mb-3">This course includes:</h4>
-                  <ul className="space-y-2 text-sm text-gray-600">
+                <div className="mt-5 pt-5 border-t border-gray-200 dark:border-gray-800">
+                  <h4 className="font-bold text-sm text-[#1c1d1f] dark:text-gray-100 mb-3">This course includes:</h4>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                     <li className="flex items-center gap-2">
                       <MonitorPlay className="w-4 h-4 flex-shrink-0" />
                       {fakeHours} hours on-demand video
@@ -269,28 +269,28 @@ export default function CoursePage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12 w-full text-left">
-        <h2 className="text-xl md:text-2xl font-bold text-[#1c1d1f] mb-2">Course content</h2>
-        <p className="text-sm text-gray-500 mb-6">
+        <h2 className="text-xl md:text-2xl font-bold text-[#1c1d1f] dark:text-white mb-2">Course content</h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
           {sections.length} sections • {totalVideos} lectures • {fakeHours}h total length
         </p>
 
-        <div className="border border-gray-200 rounded-lg overflow-hidden">
+        <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
           {sections.length === 0 ? (
             <div className="p-8 text-center text-gray-400">No content available yet.</div>
           ) : (
             sections.map((section, idx) => (
-              <div key={section.id} className={idx > 0 ? 'border-t border-gray-200' : ''}>
-                <div className="bg-[#f7f9fa] px-5 py-4 flex justify-between items-center cursor-pointer hover:bg-gray-100">
+              <div key={section.id} className={idx > 0 ? 'border-t border-gray-200 dark:border-gray-700' : ''}>
+                <div className="bg-[#f7f9fa] dark:bg-[#1a1a1a] px-5 py-4 flex justify-between items-center cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                   <div className="flex items-center gap-2">
-                    <ChevronDown className="w-4 h-4 text-gray-600" />
-                    <span className="font-bold text-sm text-[#1c1d1f]">{section.title}</span>
+                    <ChevronDown className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                    <span className="font-bold text-sm text-[#1c1d1f] dark:text-gray-100">{section.title}</span>
                   </div>
-                  <span className="text-xs text-gray-500">{section.videos?.length || 0} lectures</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">{section.videos?.length || 0} lectures</span>
                 </div>
-                <div className="bg-white">
+                <div className="bg-white dark:bg-[#111111]">
                   {section.videos?.map((video) => (
-                    <div key={video.id} className="flex items-center gap-3 px-8 py-3 text-sm text-gray-700 border-t border-gray-100">
-                      <PlayCircle className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                    <div key={video.id} className="flex items-center gap-3 px-8 py-3 text-sm text-gray-700 dark:text-gray-300 border-t border-gray-100 dark:border-gray-800">
+                      <PlayCircle className="w-4 h-4 text-gray-400 dark:text-gray-500 flex-shrink-0" />
                       <span>{video.title}</span>
                     </div>
                   ))}
@@ -300,8 +300,8 @@ export default function CoursePage() {
           )}
         </div>
 
-        <div className="mt-8 md:mt-12 border border-gray-200 rounded-lg p-5 md:p-8">
-          <h2 className="text-xl md:text-2xl font-bold text-[#1c1d1f] mb-4 md:mb-5">What you'll learn</h2>
+        <div className="mt-8 md:mt-12 border border-gray-200 dark:border-gray-700 rounded-lg p-5 md:p-8">
+          <h2 className="text-xl md:text-2xl font-bold text-[#1c1d1f] dark:text-white mb-4 md:mb-5">What you'll learn</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {[
               'Build real-world projects from scratch',
@@ -311,8 +311,8 @@ export default function CoursePage() {
               'Write clean, maintainable code',
               'Prepare for technical interviews',
             ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-[#1c1d1f]">
-                <Check className="w-5 h-5 text-[#1c1d1f] flex-shrink-0 mt-0.5" />
+               <div key={i} className="flex items-start gap-2 text-sm text-[#1c1d1f] dark:text-gray-200">
+                <Check className="w-5 h-5 text-[#1c1d1f] dark:text-white flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}

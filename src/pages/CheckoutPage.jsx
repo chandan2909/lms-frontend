@@ -18,7 +18,7 @@ function formatExpiry(val) {
   return d.length >= 3 ? `${d.slice(0, 2)}/${d.slice(2)}` : d;
 }
 
-const inputCls = 'w-full px-3 py-2.5 border border-gray-300 rounded text-sm focus:outline-none focus:border-[#1c1d1f] focus:ring-1 focus:ring-[#1c1d1f] text-[#1c1d1f] bg-white placeholder-gray-400 transition-colors';
+const inputCls = 'w-full px-3 py-2.5 border border-gray-300 dark:border-gray-700 rounded text-sm focus:outline-none focus:border-[#1c1d1f] dark:focus:border-gray-400 focus:ring-1 focus:ring-[#1c1d1f] dark:focus:ring-gray-400 text-[#1c1d1f] dark:text-white bg-white dark:bg-[#111111] placeholder-gray-400 transition-colors';
 const errCls = 'border-red-400 focus:border-red-400 focus:ring-red-400';
 
 export default function CheckoutPage() {
@@ -102,12 +102,12 @@ export default function CheckoutPage() {
 
   if (step === 'processing') {
     return (
-      <div className="min-h-screen bg-[#f7f9fa] flex flex-col">
+      <div className="min-h-screen bg-[#f7f9fa] dark:bg-[#0a0a0a] flex flex-col transition-colors duration-200">
         <Header />
         <div className="flex-grow flex flex-col items-center justify-center pt-[72px]">
-          <div className="w-14 h-14 border-4 border-[#1c1d1f] border-t-transparent rounded-full animate-spin mb-6" />
-          <h2 className="text-xl font-bold text-[#1c1d1f] mb-2">Processing Payment…</h2>
-          <p className="text-gray-500 text-sm">Please do not close or refresh this page</p>
+          <div className="w-14 h-14 border-4 border-[#1c1d1f] dark:border-white border-t-transparent dark:border-t-transparent rounded-full animate-spin mb-6" />
+          <h2 className="text-xl font-bold text-[#1c1d1f] dark:text-white mb-2">Processing Payment…</h2>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">Please do not close or refresh this page</p>
         </div>
       </div>
     );
@@ -115,21 +115,21 @@ export default function CheckoutPage() {
 
   if (step === 'success') {
     return (
-      <div className="min-h-screen bg-[#f7f9fa] flex flex-col">
+      <div className="min-h-screen bg-[#f7f9fa] dark:bg-[#0a0a0a] flex flex-col transition-colors duration-200">
         <Header />
         <div className="flex-grow flex flex-col items-center justify-center pt-[72px] px-6">
-          <div className="bg-white border border-gray-200 rounded-lg p-12 text-center max-w-md w-full shadow-sm">
-            <div className="w-20 h-20 bg-green-50 border border-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Check className="w-10 h-10 text-green-500" />
+          <div className="bg-white dark:bg-[#111111] border border-gray-200 dark:border-gray-800 rounded-lg p-12 text-center max-w-md w-full shadow-sm transition-colors duration-200">
+            <div className="w-20 h-20 bg-green-50 dark:bg-green-900/30 border border-green-100 dark:border-green-800 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Check className="w-10 h-10 text-green-500 dark:text-green-400" />
             </div>
-            <h1 className="text-2xl font-bold text-[#1c1d1f] font-serif mb-2">Payment Successful!</h1>
-            <p className="text-gray-500 mb-1">₹{amount.toLocaleString('en-IN')} paid to Kodemy</p>
-            <p className="text-sm text-gray-400 mb-6">
+            <h1 className="text-2xl font-bold text-[#1c1d1f] dark:text-white font-serif mb-2">Payment Successful!</h1>
+            <p className="text-gray-500 dark:text-gray-400 mb-1">₹{amount.toLocaleString('en-IN')} paid to Kodemy</p>
+            <p className="text-sm text-gray-400 dark:text-gray-500 mb-6">
               You are now enrolled in {itemCount} course{itemCount > 1 ? 's' : ''}. Redirecting to My Learning…
             </p>
             <button
               onClick={() => navigate('/profile')}
-              className="px-6 py-2.5 bg-[#1c1d1f] text-white font-bold text-sm rounded hover:bg-black transition-colors"
+              className="px-6 py-2.5 bg-[#1c1d1f] dark:bg-white text-white dark:text-[#1c1d1f] font-bold text-sm rounded hover:bg-black dark:hover:bg-gray-200 transition-colors"
             >
               Go to My Learning
             </button>
@@ -141,7 +141,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f7f9fa] flex flex-col">
+    <div className="min-h-screen bg-[#f7f9fa] dark:bg-[#0a0a0a] flex flex-col transition-colors duration-200">
       <Header />
       <main className="flex-grow pt-[72px]">
         <div className="bg-[#1c1d1f] text-white py-8">
@@ -157,8 +157,8 @@ export default function CheckoutPage() {
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-6 md:py-10">
           <div className="flex flex-col-reverse lg:flex-row gap-6 md:gap-8">
             <div className="flex-1 space-y-4 md:space-y-6">
-              <div className="bg-white border border-gray-200 rounded-lg p-4 md:p-6">
-                <h2 className="text-base font-bold text-[#1c1d1f] mb-4 pb-3 border-b border-gray-100">Contact Details</h2>
+              <div className="bg-white dark:bg-[#111111] border border-gray-200 dark:border-gray-800 rounded-lg p-4 md:p-6 transition-colors">
+                <h2 className="text-base font-bold text-[#1c1d1f] dark:text-white mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">Contact Details</h2>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-xs font-bold text-gray-500 uppercase mb-1.5">Full Name</label>
@@ -174,8 +174,8 @@ export default function CheckoutPage() {
                     <div>
                       <label className="block text-xs font-bold text-gray-500 uppercase mb-1.5">Mobile Number</label>
                       <div className="flex">
-                        <span className="inline-flex items-center px-3 text-sm bg-gray-50 border border-r-0 border-gray-300 rounded-l text-gray-500 font-medium">+91</span>
-                        <input className={`flex-1 px-3 py-2.5 border border-gray-300 rounded-r text-sm focus:outline-none focus:border-[#1c1d1f] focus:ring-1 focus:ring-[#1c1d1f] text-[#1c1d1f] bg-white placeholder-gray-400 transition-colors ${errors.phone ? errCls : ''}`} placeholder="10-digit mobile number" maxLength={10} value={phone} onChange={e => setPhone(e.target.value.replace(/\D/g, ''))} />
+                        <span className="inline-flex items-center px-3 text-sm bg-gray-50 dark:bg-[#1a1a1a] border border-r-0 border-gray-300 dark:border-gray-700 rounded-l text-gray-500 dark:text-gray-400 font-medium">+91</span>
+                        <input className={`flex-1 px-3 py-2.5 border border-gray-300 dark:border-gray-700 rounded-r text-sm focus:outline-none focus:border-[#1c1d1f] dark:focus:border-gray-400 focus:ring-1 focus:ring-[#1c1d1f] dark:focus:ring-gray-400 text-[#1c1d1f] dark:text-white bg-white dark:bg-[#111111] placeholder-gray-400 transition-colors ${errors.phone ? errCls : ''}`} placeholder="10-digit mobile number" maxLength={10} value={phone} onChange={e => setPhone(e.target.value.replace(/\D/g, ''))} />
                       </div>
                       {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                     </div>
@@ -183,15 +183,15 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              <div className="bg-white border border-gray-200 rounded-lg p-4 md:p-6">
-                <h2 className="text-base font-bold text-[#1c1d1f] mb-4 pb-3 border-b border-gray-100">Payment Method</h2>
+              <div className="bg-white dark:bg-[#111111] border border-gray-200 dark:border-gray-800 rounded-lg p-4 md:p-6 transition-colors">
+                <h2 className="text-base font-bold text-[#1c1d1f] dark:text-white mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">Payment Method</h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-6">
                   {paymentMethods.map(m => (
                     <button key={m.id} onClick={() => setMethod(m.id)}
                       className={`flex flex-col items-center gap-1.5 py-3 px-2 rounded border text-xs font-bold transition-all ${
                         method === m.id
-                          ? 'border-[#1c1d1f] bg-[#1c1d1f] text-white'
-                          : 'border-gray-200 text-gray-500 hover:border-[#1c1d1f] hover:text-[#1c1d1f]'
+                          ? 'border-[#1c1d1f] dark:border-white bg-[#1c1d1f] dark:bg-white text-white dark:text-[#1c1d1f]'
+                          : 'border-gray-200 dark:border-gray-700 text-gray-500 hover:border-[#1c1d1f] dark:hover:border-gray-300 hover:text-[#1c1d1f] dark:hover:text-gray-300'
                       }`}>
                       <span className="text-xl">{m.emoji}</span>
                       {m.label}
@@ -251,7 +251,7 @@ export default function CheckoutPage() {
                     <div className="grid grid-cols-2 gap-2">
                       {['SBI', 'HDFC', 'ICICI', 'Axis'].map(b => (
                         <button key={b} onClick={() => setBank(b)}
-                          className={`py-3 px-4 border rounded text-sm font-bold transition-all ${bank === b ? 'border-[#1c1d1f] bg-[#1c1d1f] text-white' : 'border-gray-200 text-gray-600 hover:border-[#1c1d1f]'}`}>
+                          className={`py-3 px-4 border rounded text-sm font-bold transition-all ${bank === b ? 'border-[#1c1d1f] dark:border-white bg-[#1c1d1f] dark:bg-white text-white dark:text-[#1c1d1f]' : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-[#1c1d1f] dark:hover:border-gray-300'}`}>
                           {b} Bank
                         </button>
                       ))}
@@ -272,7 +272,7 @@ export default function CheckoutPage() {
                     <div className="grid grid-cols-2 gap-2">
                       {WALLETS.map(w => (
                         <button key={w} onClick={() => setWallet(w)}
-                          className={`py-3 px-4 border rounded text-sm font-bold transition-all ${wallet === w ? 'border-[#1c1d1f] bg-[#1c1d1f] text-white' : 'border-gray-200 text-gray-600 hover:border-[#1c1d1f]'}`}>
+                          className={`py-3 px-4 border rounded text-sm font-bold transition-all ${wallet === w ? 'border-[#1c1d1f] dark:border-white bg-[#1c1d1f] dark:bg-white text-white dark:text-[#1c1d1f]' : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-[#1c1d1f] dark:hover:border-gray-300'}`}>
                           {w}
                         </button>
                       ))}
@@ -284,8 +284,8 @@ export default function CheckoutPage() {
             </div>
 
             <div className="lg:w-[340px] flex-shrink-0">
-              <div className="bg-white border border-gray-200 rounded-lg p-4 md:p-6 lg:sticky lg:top-[90px]">
-                <h2 className="text-base font-bold text-[#1c1d1f] mb-4 pb-3 border-b border-gray-100">Order Summary</h2>
+              <div className="bg-white dark:bg-[#111111] border border-gray-200 dark:border-gray-800 rounded-lg p-4 md:p-6 lg:sticky lg:top-[90px] transition-colors">
+                <h2 className="text-base font-bold text-[#1c1d1f] dark:text-white mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">Order Summary</h2>
                 <div className="space-y-3 mb-4">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Original Price</span>
@@ -297,14 +297,14 @@ export default function CheckoutPage() {
                       <span className="text-green-600 font-medium">- ₹{(originalAmount - amount).toLocaleString('en-IN')}</span>
                     </div>
                   )}
-                  <div className="border-t border-gray-100 pt-3 flex justify-between">
-                    <span className="font-bold text-[#1c1d1f]">Total</span>
-                    <span className="text-2xl font-bold text-[#1c1d1f]">₹{amount.toLocaleString('en-IN')}</span>
+                  <div className="border-t border-gray-100 dark:border-gray-800 pt-3 flex justify-between">
+                    <span className="font-bold text-[#1c1d1f] dark:text-gray-200">Total</span>
+                    <span className="text-2xl font-bold text-[#1c1d1f] dark:text-white">₹{amount.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
 
                 {originalAmount > amount && (
-                  <div className="bg-[#f0fdf4] border border-green-200 text-green-700 text-xs font-medium px-3 py-2 rounded mb-4">
+                  <div className="bg-[#f0fdf4] dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 text-xs font-medium px-3 py-2 rounded mb-4">
                     🎉 You save ₹{(originalAmount - amount).toLocaleString('en-IN')} on this order!
                   </div>
                 )}
@@ -318,12 +318,12 @@ export default function CheckoutPage() {
 
                 <button
                   onClick={() => navigate(-1)}
-                  className="w-full py-2.5 border border-gray-300 text-[#1c1d1f] font-bold text-sm rounded hover:border-[#1c1d1f] transition-colors"
+                  className="w-full py-2.5 border border-gray-300 dark:border-gray-700 text-[#1c1d1f] dark:text-gray-300 font-bold text-sm rounded hover:border-[#1c1d1f] dark:hover:border-white transition-colors"
                 >
                   ← Back
                 </button>
 
-                <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
                   <p className="text-xs text-gray-400 text-center flex items-center justify-center gap-1.5">
                     <Lock className="w-3.5 h-3.5" />
                     256-bit SSL Encryption · 30-day refund guarantee

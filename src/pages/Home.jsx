@@ -38,7 +38,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a] transition-colors duration-200">
       <Header />
       <main className="flex-grow w-full">
 
@@ -105,13 +105,13 @@ export default function Home() {
         </section>
 
         {/* ── Courses ── */}
-        <section id="courses" className="max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-14 w-full text-[#1c1d1f]">
+        <section id="courses" className="max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-14 w-full text-[#1c1d1f] dark:text-white transition-colors duration-200">
           <div className="flex flex-col sm:flex-row sm:items-end gap-2 md:gap-4 mb-6 md:mb-8">
             <div>
-              <h2 className="text-2xl md:text-3xl font-black mb-1">
+              <h2 className="text-2xl md:text-3xl font-black mb-1 text-[#1c1d1f] dark:text-white">
                 All courses
               </h2>
-              <p className="text-gray-500 text-sm">
+              <p className="text-gray-500 dark:text-gray-400 text-sm">
                 {subjects.length} course{subjects.length !== 1 ? 's' : ''} — new content added every month
               </p>
             </div>
@@ -143,7 +143,7 @@ export default function Home() {
                 <Link
                   key={subject.id}
                   to={`/course/${subject.id}`}
-                  className="group flex flex-col bg-white border border-gray-200 hover:border-[#1c1d1f] hover:shadow-lg transition-all duration-200 text-left overflow-hidden"
+                  className="group flex flex-col bg-white dark:bg-[#111111] border border-gray-200 dark:border-gray-800 hover:border-[#1c1d1f] dark:hover:border-gray-500 hover:shadow-lg transition-all duration-200 text-left overflow-hidden rounded-lg"
                 >
                   {/* Thumbnail */}
                   <div className="w-full aspect-video bg-[#2d2f31] relative overflow-hidden">
@@ -169,7 +169,7 @@ export default function Home() {
 
                   {/* Body */}
                   <div className="flex flex-col flex-grow p-4">
-                    <h3 className="text-[14px] font-bold text-[#1c1d1f] leading-snug line-clamp-2 mb-1 group-hover:underline">
+                    <h3 className="text-[14px] font-bold text-[#1c1d1f] dark:text-gray-100 leading-snug line-clamp-2 mb-1 group-hover:underline">
                       {subject.title}
                     </h3>
                     <p className="text-xs text-gray-500 mb-2">Dr. Instructor</p>
@@ -187,10 +187,10 @@ export default function Home() {
 
                     {/* Price pushed to bottom */}
                     <div className="mt-auto">
-                      <span className="font-black text-base text-[#1c1d1f]">
+                      <span className="font-black text-base text-[#1c1d1f] dark:text-gray-100">
                         ₹{getCoursePrice(subject.id).toLocaleString('en-IN')}
                       </span>
-                      <span className="text-xs text-gray-400 line-through ml-2">
+                      <span className="text-xs text-gray-400 dark:text-gray-500 line-through ml-2">
                         ₹{getOriginalPrice(subject.id).toLocaleString('en-IN')}
                       </span>
                       <span className="ml-2 text-xs font-bold text-green-600">
@@ -205,7 +205,7 @@ export default function Home() {
         </section>
 
         {/* ── Trust strip ── */}
-        <section className="border-t border-gray-100 py-10 bg-[#f7f9fa]">
+        <section className="border-t border-gray-100 dark:border-gray-800 py-10 bg-[#f7f9fa] dark:bg-[#0a0a0a] transition-colors duration-200">
           <div className="max-w-7xl mx-auto px-6 text-center">
             <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">
               Trusted by learners worldwide

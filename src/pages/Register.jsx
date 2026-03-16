@@ -40,21 +40,21 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-white relative">
+    <div className="flex flex-col min-h-screen bg-white dark:bg-[#0a0a0a] relative transition-colors duration-200">
       <Header />
       
       {loading && (
-        <div className="absolute inset-0 bg-white/70 backdrop-blur-sm flex flex-col items-center justify-center z-50">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
-          <p className="mt-4 font-bold text-gray-700 font-serif">Creating account...</p>
+        <div className="absolute inset-0 bg-white/70 dark:bg-[#0a0a0a]/70 backdrop-blur-sm flex flex-col items-center justify-center z-50 transition-colors duration-200">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black dark:border-white"></div>
+          <p className="mt-4 font-bold text-gray-700 dark:text-gray-200 font-serif">Creating account...</p>
         </div>
       )}
 
       <div className="flex flex-col items-center justify-center flex-grow px-4 my-8">
         <div className="w-full max-w-sm space-y-8">
           <div className="text-center">
-            <h1 className="text-3xl font-semibold tracking-tight text-[#1c1d1f]">Create an account</h1>
-            <p className="mt-2 text-sm text-gray-500">Sign up to get started</p>
+            <h1 className="text-3xl font-semibold tracking-tight text-[#1c1d1f] dark:text-white">Create an account</h1>
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Sign up to get started</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4 mt-8">
@@ -65,70 +65,70 @@ export default function RegisterPage() {
             )}
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 text-left">Full Name</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 text-left">Full Name</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black text-black"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-black dark:focus:ring-white text-black dark:text-white bg-white dark:bg-[#111111] dark:placeholder-gray-500 transition-colors"
                 placeholder="John Doe"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 text-left">Email</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 text-left">Email</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black text-black"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-black dark:focus:ring-white text-black dark:text-white bg-white dark:bg-[#111111] dark:placeholder-gray-500 transition-colors"
                 placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 text-left">Password</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 text-left">Password</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black text-black"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-black dark:focus:ring-white text-black dark:text-white bg-white dark:bg-[#111111] transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 text-left">Confirm Password</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 text-left">Confirm Password</label>
               <input
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black text-black"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-black dark:focus:ring-white text-black dark:text-white bg-white dark:bg-[#111111] transition-colors"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-6 bg-black text-white whitespace-nowrap py-2 rounded-md hover:bg-gray-800 transition-colors disabled:opacity-50 font-bold flex items-center justify-center gap-2"
+              className="w-full mt-6 bg-black dark:bg-white text-white dark:text-[#1c1d1f] whitespace-nowrap py-2 rounded-md hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 font-bold flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>
-                  <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"></div>
+                  <div className="w-4 h-4 rounded-full border-2 border-white/30 dark:border-black/30 border-t-white dark:border-t-black animate-spin"></div>
                   Sign up...
                 </>
               ) : 'Sign up'}
             </button>
           </form>
 
-          <p className="text-center text-sm text-gray-500 mt-6">
+          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
             Already have an account?{' '}
-            <Link to="/auth/login" className="text-black hover:underline font-medium">
+            <Link to="/auth/login" className="text-black dark:text-white hover:underline font-medium">
               Sign in
             </Link>
           </p>

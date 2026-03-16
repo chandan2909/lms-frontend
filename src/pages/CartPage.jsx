@@ -24,14 +24,14 @@ export default function CartPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f7f9fa]">
+    <div className="min-h-screen flex flex-col bg-[#f7f9fa] dark:bg-[#0a0a0a] transition-colors duration-200">
       <Header />
       <main className="flex-grow pt-[72px]">
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-6 md:py-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#1c1d1f] mb-6 md:mb-8 font-serif">Shopping Cart</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-[#1c1d1f] dark:text-white mb-6 md:mb-8 font-serif">Shopping Cart</h1>
 
           {items.length === 0 ? (
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-16 text-center">
+            <div className="bg-white dark:bg-[#111111] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 p-16 text-center transition-colors">
               <ShoppingCart className="w-20 h-20 text-gray-300 mx-auto mb-4" />
               <p className="text-lg text-gray-500 mb-4">Your cart is empty.</p>
               <button
@@ -44,8 +44,8 @@ export default function CartPage() {
           ) : (
             <div className="flex flex-col lg:flex-row gap-8">
               <div className="flex-1">
-                <p className="text-sm font-bold text-gray-500 mb-4">{items.length} Course{items.length > 1 ? 's' : ''} in Cart</p>
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 divide-y divide-gray-100">
+                <p className="text-sm font-bold text-gray-500 dark:text-gray-400 mb-4">{items.length} Course{items.length > 1 ? 's' : ''} in Cart</p>
+                <div className="bg-white dark:bg-[#111111] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 divide-y divide-gray-100 dark:divide-gray-800 transition-colors">
                   {items.map((item) => (
                     <div key={item.id} className="flex items-start gap-3 md:gap-4 p-4 md:p-5">
                       <div className={`w-24 h-16 md:w-32 md:h-20 rounded overflow-hidden flex-shrink-0 relative bg-gradient-to-br ${item.gradient}`}>
@@ -62,8 +62,8 @@ export default function CartPage() {
                       </div>
 
                       <div className="flex-1 min-w-0 text-left">
-                        <h3 className="font-bold text-[#1c1d1f] text-base truncate">{item.title}</h3>
-                        <p className="text-xs text-gray-500 mt-1">By Dr. Instructor</p>
+                        <h3 className="font-bold text-[#1c1d1f] dark:text-gray-100 text-base truncate">{item.title}</h3>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">By Dr. Instructor</p>
                         <div className="flex items-center gap-1 mt-1">
                           <span className="text-sm font-bold text-[#b4690e]">4.8</span>
                           <div className="flex text-[#b4690e]">
@@ -90,11 +90,11 @@ export default function CartPage() {
               </div>
 
               <div className="lg:w-[300px] flex-shrink-0">
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 md:p-6 sticky top-[90px]">
-                  <h3 className="text-gray-500 font-bold text-sm mb-3">Total:</h3>
-                  <p className="text-3xl font-bold text-[#1c1d1f] mb-1">₹{total.toLocaleString('en-IN')}</p>
-                  <p className="text-sm text-gray-400 line-through mb-1">₹{originalTotal.toLocaleString('en-IN')}</p>
-                  <p className="text-sm font-bold text-[#1c1d1f] mb-5">{discount}% off</p>
+                <div className="bg-white dark:bg-[#111111] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 p-4 md:p-6 sticky top-[90px] transition-colors">
+                  <h3 className="text-gray-500 dark:text-gray-400 font-bold text-sm mb-3">Total:</h3>
+                  <p className="text-3xl font-bold text-[#1c1d1f] dark:text-white mb-1">₹{total.toLocaleString('en-IN')}</p>
+                  <p className="text-sm text-gray-400 dark:text-gray-500 line-through mb-1">₹{originalTotal.toLocaleString('en-IN')}</p>
+                  <p className="text-sm font-bold text-[#1c1d1f] dark:text-gray-200 mb-5">{discount}% off</p>
 
                   <button
                     onClick={handleCheckout}
@@ -103,13 +103,13 @@ export default function CartPage() {
                     Checkout
                   </button>
 
-                  <div className="border-t border-gray-200 mt-4 pt-4">
-                    <h4 className="font-bold text-sm text-[#1c1d1f] mb-2">Promotions</h4>
+                  <div className="border-t border-gray-200 dark:border-gray-800 mt-4 pt-4">
+                    <h4 className="font-bold text-sm text-[#1c1d1f] dark:text-gray-200 mb-2">Promotions</h4>
                     <div className="flex gap-2">
                       <input
                         type="text"
                         placeholder="Enter Coupon"
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-[#a435f0] text-black"
+                        className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1c1d1f] rounded text-sm focus:outline-none focus:ring-1 focus:ring-[#a435f0] text-black dark:text-white placeholder-gray-400 transition-colors"
                       />
                       <button className="px-4 py-2 bg-[#a435f0] text-white font-bold text-sm rounded hover:bg-[#8710d8]">
                         Apply
