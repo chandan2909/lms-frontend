@@ -50,18 +50,18 @@ export default function HeaderActions({ isMobile, closeMenu }) {
            </div>
         )}
         {!isMobile && (
-          <Link to="/" onClick={closeMenu} className={`text-sm font-bold px-4 py-2 rounded-full transition-all ${isActive('/') ? 'bg-[#1c1d1f] text-white' : 'text-[#1c1d1f] hover:bg-gray-100'}`}>
+          <Link to="/" onClick={closeMenu} className={`text-sm font-bold px-4 py-2 rounded-full transition-all ${isActive('/') ? 'bg-[#1c1d1f] dark:bg-white text-white dark:text-[#1c1d1f]' : 'text-[#1c1d1f] dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'}`}>
             Home
           </Link>
         )}
-        <Link to="/profile" onClick={closeMenu} className={`text-sm font-bold transition-all ${isMobile ? 'w-full py-2 px-3 rounded-lg' : 'px-4 py-2 rounded-full'} ${isActive('/profile') ? 'bg-[#1c1d1f] text-white' : 'text-[#1c1d1f] hover:bg-gray-100'}`}>
+        <Link to="/profile" onClick={closeMenu} className={`text-sm font-bold transition-all ${isMobile ? 'w-full py-2 px-3 rounded-lg' : 'px-4 py-2 rounded-full'} ${isActive('/profile') ? 'bg-[#1c1d1f] dark:bg-white text-white dark:text-[#1c1d1f]' : 'text-[#1c1d1f] dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'}`}>
           My profile
         </Link>
-        <button onClick={handleLogout} className={`text-sm font-bold text-[#1c1d1f] hover:bg-gray-100 transition-all text-left ${isMobile ? 'w-full py-2 px-3 rounded-lg' : 'px-4 py-2 rounded-full'}`}>
+        <button onClick={handleLogout} className={`text-sm font-bold text-[#1c1d1f] dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-left ${isMobile ? 'w-full py-2 px-3 rounded-lg' : 'px-4 py-2 rounded-full'}`}>
           Logout
         </button>
         {!isMobile && (
-          <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-bold ml-2">
+          <div className="w-10 h-10 rounded-full bg-black dark:bg-white text-white dark:text-[#1c1d1f] flex items-center justify-center font-bold ml-2 transition-colors">
             {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
           </div>
         )}
@@ -73,21 +73,21 @@ export default function HeaderActions({ isMobile, closeMenu }) {
   return (
     <nav className={`flex ${isMobile ? 'flex-col items-stretch gap-4' : 'items-center gap-2'}`}>
       {!isMobile && (
-        <Link to="/" onClick={closeMenu} className={`text-sm font-bold px-4 py-2 rounded-full transition-all mr-2 ${isActive('/') ? 'bg-[#1c1d1f] text-white' : 'text-[#1c1d1f] hover:bg-gray-100'}`}>
+        <Link to="/" onClick={closeMenu} className={`text-sm font-bold px-4 py-2 rounded-full transition-all mr-2 ${isActive('/') ? 'bg-[#1c1d1f] dark:bg-white text-white dark:text-[#1c1d1f]' : 'text-[#1c1d1f] dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'}`}>
           Home
         </Link>
       )}
       <Link 
         to="/auth/login" 
         onClick={closeMenu}
-        className="h-10 px-4 flex items-center justify-center text-sm font-bold text-[#1c1d1f] border border-[#1c1d1f] bg-white hover:bg-[#f7f9fa] transition-colors"
+        className="h-10 px-4 flex items-center justify-center text-sm font-bold text-[#1c1d1f] dark:text-gray-200 border border-[#1c1d1f] dark:border-gray-200 bg-white dark:bg-[#0a0a0a] hover:bg-[#f7f9fa] dark:hover:bg-[#111111] transition-colors"
       >
         Log in
       </Link>
       <Link 
         to="/auth/register" 
         onClick={closeMenu}
-        className="h-10 px-4 flex items-center justify-center text-sm font-bold text-white bg-[#1c1d1f] hover:bg-gray-800 transition-colors"
+        className="h-10 px-4 flex items-center justify-center text-sm font-bold text-white dark:text-[#1c1d1f] bg-[#1c1d1f] dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
       >
         Sign up
       </Link>
