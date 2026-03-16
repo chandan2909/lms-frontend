@@ -13,6 +13,7 @@ import VideoPage from './pages/VideoPage'
 import SubjectIndex from './pages/SubjectIndex'
 import ChatbotPage from './pages/ChatbotPage'
 import CheckoutPage from './pages/CheckoutPage'
+import BottomNav from './components/Layout/BottomNav'
 import { startKeepAlive } from './lib/keepAlive'
 
 function AnimatedRoutes() {
@@ -34,6 +35,7 @@ function AnimatedRoutes() {
            <Route path="video/:videoId" element={<VideoPage />} />
         </Route>
       </Routes>
+      <BottomNav />
     </AnimatePresence>
   )
 }

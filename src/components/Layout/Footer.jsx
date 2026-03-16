@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-[#1c1d1f] text-white py-12 px-6 border-t border-gray-700">
+    <footer className="bg-[#1c1d1f] text-white py-12 pb-24 md:pb-12 px-6 border-t border-gray-700">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-8">
         <div className="flex flex-col gap-4">
           <span className="text-2xl font-black font-serif tracking-tighter">Kodemy</span>
