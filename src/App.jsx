@@ -35,7 +35,6 @@ function AnimatedRoutes() {
            <Route path="video/:videoId" element={<VideoPage />} />
         </Route>
       </Routes>
-      <BottomNav />
     </AnimatePresence>
   )
 }
@@ -51,6 +50,7 @@ function App() {
   return (
     <BrowserRouter>
       <AnimatedRoutes />
+      <BottomNav />
     </BrowserRouter>
   )
 }
