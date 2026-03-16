@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '@/lib/apiClient';
 import useAuthStore from '@/store/authStore';
 import useCartStore from '@/store/cartStore';
-import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import { Star, Clock, Globe, PlayCircle, MonitorPlay, FileText, Tv, Award, ChevronDown, Check } from 'lucide-react';
 
@@ -123,7 +122,6 @@ export default function CoursePage() {
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a] transition-colors duration-200">
-        <Header />
         <div className="flex-grow flex items-center justify-center pt-[72px]">
           <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#1c1d1f] dark:border-white"></div>
         </div>
@@ -135,8 +133,7 @@ export default function CoursePage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a] transition-colors duration-200">
-      <Header />
-
+      
       <div className="bg-[#1c1d1f] pt-[72px]">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-10 flex flex-col lg:flex-row gap-6 md:gap-8">
           <div className="flex-1 text-white text-left">

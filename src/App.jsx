@@ -14,14 +14,18 @@ import SubjectIndex from './pages/SubjectIndex'
 import ChatbotPage from './pages/ChatbotPage'
 import CheckoutPage from './pages/CheckoutPage'
 import BottomNav from './components/Layout/BottomNav'
+import Header from './components/Layout/Header'
 import { startKeepAlive } from './lib/keepAlive'
 
 function AnimatedRoutes() {
   const location = useLocation();
+  const hideHeader = location.pathname === '/chat' || location.pathname.includes('/video/');
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
+    <>
+      {!hideHeader && <Header />}
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageTransition><Home /></PageTransition>} />
         <Route path="/auth/login" element={<PageTransition><Login /></PageTransition>} />
         <Route path="/auth/register" element={<PageTransition><Register /></PageTransition>} />
@@ -36,6 +40,7 @@ function AnimatedRoutes() {
         </Route>
       </Routes>
     </AnimatePresence>
+    </>
   )
 }
 

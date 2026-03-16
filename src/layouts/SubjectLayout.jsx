@@ -1,7 +1,6 @@
 import { Outlet, useParams } from 'react-router-dom';
 import AuthGuard from '@/components/Auth/AuthGuard';
 import SubjectSidebar from '@/components/Sidebar/SubjectSidebar';
-import Header from '@/components/Layout/Header';
 
 export default function SubjectLayout() {
   const { subjectId } = useParams();
@@ -10,7 +9,7 @@ export default function SubjectLayout() {
   return (
     <AuthGuard>
       <div className="flex flex-col min-h-screen lg:h-screen lg:overflow-hidden bg-[#1c1d1f]">
-        <Header />
+        
         <div className="flex flex-col lg:flex-row flex-1 lg:overflow-hidden pt-[72px]">
           <div className="flex-1 relative lg:overflow-y-auto custom-scrollbar text-white">
             <Outlet />

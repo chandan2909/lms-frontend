@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import useCartStore from '@/store/cartStore';
-import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import { ShoppingCart, PlayCircle, Star } from 'lucide-react';
 
@@ -25,7 +24,6 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f7f9fa] dark:bg-[#0a0a0a] transition-colors duration-200">
-      <Header />
       <main className="flex-grow pt-[72px]">
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-6 md:py-10">
           <h1 className="text-3xl md:text-4xl font-bold text-[#1c1d1f] dark:text-white mb-6 md:mb-8 font-serif">Shopping Cart</h1>

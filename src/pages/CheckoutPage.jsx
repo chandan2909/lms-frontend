@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import { Check, Lock } from 'lucide-react';
 
@@ -103,7 +102,7 @@ export default function CheckoutPage() {
   if (step === 'processing') {
     return (
       <div className="min-h-screen bg-[#f7f9fa] dark:bg-[#0a0a0a] flex flex-col transition-colors duration-200">
-        <Header />
+        
         <div className="flex-grow flex flex-col items-center justify-center pt-[72px]">
           <div className="w-14 h-14 border-4 border-[#1c1d1f] dark:border-white border-t-transparent dark:border-t-transparent rounded-full animate-spin mb-6" />
           <h2 className="text-xl font-bold text-[#1c1d1f] dark:text-white mb-2">Processing Payment…</h2>
@@ -116,7 +115,7 @@ export default function CheckoutPage() {
   if (step === 'success') {
     return (
       <div className="min-h-screen bg-[#f7f9fa] dark:bg-[#0a0a0a] flex flex-col transition-colors duration-200">
-        <Header />
+        
         <div className="flex-grow flex flex-col items-center justify-center pt-[72px] px-6">
           <div className="bg-white dark:bg-[#111111] border border-gray-200 dark:border-gray-800 rounded-lg p-12 text-center max-w-md w-full shadow-sm transition-colors duration-200">
             <div className="w-20 h-20 bg-green-50 dark:bg-green-900/30 border border-green-100 dark:border-green-800 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -142,7 +141,6 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-[#f7f9fa] dark:bg-[#0a0a0a] flex flex-col transition-colors duration-200">
-      <Header />
       <main className="flex-grow pt-[72px]">
         <div className="bg-[#1c1d1f] text-white py-8">
           <div className="max-w-5xl mx-auto px-6">

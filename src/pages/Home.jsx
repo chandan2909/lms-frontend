@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import apiClient from '@/lib/apiClient';
 import { Link } from 'react-router-dom';
-import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import useAuthStore from '@/store/authStore';
 import { PlayCircle, Star } from 'lucide-react';
@@ -39,7 +38,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a] transition-colors duration-200">
-      <Header />
+      
       <main className="flex-grow w-full">
 
         {/* ── Hero ── */}

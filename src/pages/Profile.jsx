@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import apiClient from '@/lib/apiClient';
 import AuthGuard from '@/components/Auth/AuthGuard';
 import { Link, useNavigate } from 'react-router-dom';
-import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import useAuthStore from '@/store/authStore';
 import { PlayCircle, Award } from 'lucide-react';
@@ -53,10 +52,9 @@ export default function ProfilePage() {
 
   return (
     <AuthGuard>
-      <div className="min-h-screen bg-[#f7f9fa] dark:bg-[#0a0a0a] flex flex-col transition-colors duration-200">
-        <Header />
+      <div className="min-h-screen bg-[#f7f9fa] dark:bg-[#0a0a0a] flex flex-col transition-colors duration-200 pt-[72px]">
         
-        <div className="bg-[#1c1d1f] text-white pt-[112px] pb-[40px]">
+        <div className="bg-[#1c1d1f] text-white pt-[40px] pb-[40px]">
           <div className="max-w-5xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="flex items-center gap-4 md:gap-6">
               <div className="w-16 h-16 md:w-24 md:h-24 bg-[#2d2f31] rounded-full flex items-center justify-center text-2xl md:text-4xl font-bold font-serif border-4 border-[#3e4143] flex-shrink-0">

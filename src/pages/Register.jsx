@@ -41,7 +41,6 @@ export default function RegisterPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white dark:bg-[#0a0a0a] relative transition-colors duration-200">
-      <Header />
       
       {loading && (
         <div className="absolute inset-0 bg-white/70 dark:bg-[#0a0a0a]/70 backdrop-blur-sm flex flex-col items-center justify-center z-50 transition-colors duration-200">
