@@ -20,7 +20,7 @@ export default function ProfilePage() {
     const fetchProgress = async () => {
       try {
         const { data } = await apiClient.get('/progress/overview');
-        setProgress(data || []);
+        setProgress(Array.isArray(data) ? data : []);
       } catch (err) {
         setError('Failed to load progress.');
       } finally {
