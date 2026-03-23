@@ -1,13 +1,13 @@
 # 🎓 LMS
 
-Modern single-page application for the Learning Management System, built with **React** and **TypeScript**.
+Modern single-page application for the Learning Management System, built with **React** and **JavaScript**.
 
 ## Tech Stack
 
 | Layer          | Technology                            |
 | -------------- | ------------------------------------- |
 | Framework      | React 18                              |
-| Language       | TypeScript                            |
+| Language       | JavaScript (JSX)                      |
 | Build Tool     | Vite 5                                |
 | Styling        | Tailwind CSS 3                        |
 | State          | Zustand                               |
@@ -22,25 +22,24 @@ Modern single-page application for the Learning Management System, built with **
 
 ```
 src/
-├── main.tsx             # Entry point — renders the React app
-├── App.tsx              # Root component with routing setup
+├── main.jsx             # Entry point — renders the React app
+├── App.jsx              # Root component with routing setup
 ├── index.css            # Global styles / Tailwind directives
 ├── components/          # Reusable UI components
 ├── layouts/             # Page layout wrappers
 ├── lib/                 # API client & utility functions
 ├── pages/               # Route-level page components
-│   ├── Home.tsx         # Landing / dashboard page
-│   ├── Login.tsx        # User login
-│   ├── Register.tsx     # User registration
-│   ├── CoursePage.tsx   # Individual course view
-│   ├── VideoPage.tsx    # Video player page
-│   ├── SubjectIndex.tsx # Browse all subjects
-│   ├── Profile.tsx      # User profile
-│   ├── CartPage.tsx     # Shopping cart
-│   ├── CheckoutPage.tsx # Checkout flow
-│   └── ChatbotPage.tsx  # AI chatbot interface
+│   ├── Home.jsx         # Landing / dashboard page
+│   ├── Login.jsx        # User login
+│   ├── Register.jsx     # User registration
+│   ├── CoursePage.jsx   # Individual course view
+│   ├── VideoPage.jsx    # Video player page
+│   ├── SubjectIndex.jsx # Browse all subjects
+│   ├── Profile.jsx      # User profile
+│   ├── CartPage.jsx     # Shopping cart
+│   ├── CheckoutPage.jsx # Checkout flow
+│   └── ChatbotPage.jsx  # AI chatbot interface
 ├── store/               # Zustand state stores
-└── vite-env.d.ts        # Vite type declarations
 ```
 
 ## Getting Started
