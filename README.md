@@ -7,7 +7,11 @@ Modern single-page application for the Learning Management System, built with **
 | Layer          | Technology                            |
 | -------------- | ------------------------------------- |
 | Framework      | React 18                              |
+<<<<<<< HEAD
 | Language       | JavaScript (JSX)                      |
+=======
+| Language       | JavaScript                            |
+>>>>>>> c111eb3c386e4b4b0c0795d31f7fa7bd5f745a5a
 | Build Tool     | Vite 5                                |
 | Styling        | Tailwind CSS 3                        |
 | State          | Zustand                               |
