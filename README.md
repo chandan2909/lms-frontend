@@ -1,13 +1,13 @@
 # 🎓 LMS
 
-Modern single-page application for the Learning Management System, built with **React** and **TypeScript**.
+Modern single-page application for the Learning Management System, built with **React** and **JavaScript**.
 
 ## Tech Stack
 
 | Layer          | Technology                            |
 | -------------- | ------------------------------------- |
 | Framework      | React 18                              |
-| Language       | TypeScript                            |
+| Language       | JavaScript                            |
 | Build Tool     | Vite 5                                |
 | Styling        | Tailwind CSS 3                        |
 | State          | Zustand                               |
