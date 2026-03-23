@@ -16,7 +16,7 @@ Modern single-page application for the Learning Management System, built with **
 | Animations     | Framer Motion                         |
 | Icons          | Lucide React                          |
 | Video Player   | react-youtube                         |
-| AI Chat        | @gradio/client                        |
+
 
 ## Project Structure
 
