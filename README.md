@@ -15,7 +15,7 @@ Modern single-page application for the Learning Management System, built with **
 | HTTP Client    | Axios                                 |
 | Animations     | Framer Motion                         |
 | Icons          | Lucide React                          |
-| Video Player   | react-youtube                         |
+| Video Player   | Plyr (custom YouTube UI)              |
 
 
 ## Project Structure

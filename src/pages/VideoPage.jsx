@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '@/lib/apiClient';
 import VideoPlayer from '@/components/Video/VideoPlayer';
@@ -19,9 +19,9 @@ export default function VideoPage() {
   const [autoPlayCountdown, setAutoPlayCountdown] = useState(null);
   
   const { markVideoCompleted } = useSidebarStore();
-  const progressInterval = useRef(null);
   const autoPlayTimerRef = useRef(null);
   const playerRef = useRef(null);
+  const lastProgressSave = useRef(0);
   const videoDataRef = useRef(null);
 
   useEffect(() => {
@@ -54,7 +54,6 @@ export default function VideoPage() {
     fetchVideo();
 
     return () => {
-      if (progressInterval.current) clearInterval(progressInterval.current);
       if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
     };
   }, [parsedVideoId, parsedSubjectId]);
@@ -99,32 +98,30 @@ export default function VideoPage() {
     }
   };
 
-  const onPlayerReady = (event) => {
-    playerRef.current = event.target;
-    progressInterval.current = setInterval(() => {
-        if (playerRef.current && playerRef.current.getPlayerState() === 1) { // 1 is playing
-            const currentTime = playerRef.current.getCurrentTime();
-            const duration = playerRef.current.getDuration();
-            if (duration > 0 && currentTime > 0) {
-               handleProgress(currentTime, false);
-            }
-        }
-    }, 10000);
-  };
+  const onPlayerReady = useCallback((plyrInstance) => {
+    playerRef.current = plyrInstance;
+  }, []);
 
-  const onVideoEnd = () => {
+  const onTimeUpdate = useCallback((currentTime, duration) => {
+    const now = Date.now();
+    if (now - lastProgressSave.current >= 10000 && duration > 0 && currentTime > 0) {
+      lastProgressSave.current = now;
+      handleProgress(currentTime, false);
+    }
+  }, []);
+
+  const onVideoEnd = useCallback(() => {
     if (playerRef.current) {
-      const duration = playerRef.current.getDuration();
+      const duration = playerRef.current.duration;
       handleProgress(duration, true);
     }
-  };
+  }, []);
 
-  const onStateChange = (state) => {
-     if (state === 2 && playerRef.current) {
-        const currentTime = playerRef.current.getCurrentTime();
-        handleProgress(currentTime, false);
-     }
-  };
+  const onVideoPause = useCallback((currentTime) => {
+    if (currentTime > 0) {
+      handleProgress(currentTime, false);
+    }
+  }, []);
 
   if (loading) {
     return (
@@ -135,7 +132,7 @@ export default function VideoPage() {
   }
 
   if (error || !videoData || videoData.locked) {
-    const isLocked = videoData?.locked || error.includes('locked');
+    const isLocked = videoData?.locked || (typeof error === 'string' && error.includes('locked'));
     return (
       <div className="flex h-full items-center justify-center p-8 bg-[#1c1d1f]">
         <div className="text-center">
@@ -201,8 +198,9 @@ export default function VideoPage() {
             key={videoData.id}
             youtubeId={videoData.youtube_url}
             onEnd={onVideoEnd}
-            onStateChange={onStateChange}
+            onTimeUpdate={onTimeUpdate}
             onReady={onPlayerReady}
+            onPause={onVideoPause}
           />
 
           {autoPlayCountdown !== null && (

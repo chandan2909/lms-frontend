@@ -45,3 +45,58 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--muted-foreground);
 }
+
+/* ─── Plyr Custom Dark Theme ─── */
+.plyr-wrapper {
+  --plyr-color-main: #a78bfa;
+  --plyr-video-background: #000;
+  --plyr-badge-background: #1c1d1f;
+  --plyr-badge-text-color: #fff;
+  --plyr-badge-border-radius: 4px;
+  --plyr-control-icon-size: 18px;
+  --plyr-control-spacing: 10px;
+  --plyr-video-control-color: #fff;
+  --plyr-video-control-color-hover: #a78bfa;
+  --plyr-video-control-background-hover: rgba(167, 139, 250, 0.15);
+  --plyr-range-fill-background: #a78bfa;
+  --plyr-range-thumb-background: #fff;
+  --plyr-range-track-height: 4px;
+  --plyr-range-thumb-height: 14px;
+  --plyr-tooltip-background: #1c1d1f;
+  --plyr-tooltip-color: #fff;
+  --plyr-tooltip-radius: 6px;
+  --plyr-font-size-small: 13px;
+  --plyr-font-size-time: 13px;
+  --plyr-menu-background: #1c1d1f;
+  --plyr-menu-color: #fff;
+  --plyr-menu-radius: 8px;
+}
+
+.plyr-wrapper .plyr__controls {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+  padding: 12px 14px 10px;
+}
+
+.plyr-wrapper .plyr__control--overlaid {
+  background: rgba(167, 139, 250, 0.9);
+  padding: 20px;
+}
+
+.plyr-wrapper .plyr__control--overlaid:hover {
+  background: #a78bfa;
+}
+
+.plyr-wrapper .plyr__menu__container {
+  background: #1c1d1f;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.plyr-wrapper .plyr__progress__buffer {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.plyr-wrapper .plyr--full-ui input[type=range] {
+  color: #a78bfa;
+}
+
