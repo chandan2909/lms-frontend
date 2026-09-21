@@ -23,7 +23,14 @@ export default function LoginPage() {
       setAccessToken(data.accessToken);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.error || 'Login failed. Please check your credentials.');
+      const msg = err.response?.data?.error || '';
+      if (msg === 'Invalid credentials') {
+        setError('Email or password is incorrect.');
+      } else if (msg.includes('Validation failed')) {
+        setError('Please enter a valid email and password.');
+      } else {
+        setError('Login failed. Please try again.');
+      }
     } finally {
       setLoading(false);
     }

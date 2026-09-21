@@ -29,10 +29,19 @@ export default function RegisterPage() {
       setAccessToken(data.accessToken);
       navigate('/');
     } catch (err) {
-      if (err.response?.data?.details) {
-         setError(err.response.data.details[0].message);
+      const msg = err.response?.data?.error || '';
+      const details = err.response?.data?.details || [];
+
+      if (msg === 'Email already in use') {
+        setError('An account with this email already exists.');
+      } else if (details.length > 0) {
+        const field = details[0].path?.[0];
+        if (field === 'email') setError('Please enter a valid email address.');
+        else if (field === 'name') setError('Name must be at least 2 characters.');
+        else if (field === 'password') setError('Password must be at least 6 characters.');
+        else setError('Please check your input and try again.');
       } else {
-         setError(err.response?.data?.error || 'Registration failed.');
+        setError('Registration failed. Please try again.');
       }
     } finally {
       setLoading(false);
