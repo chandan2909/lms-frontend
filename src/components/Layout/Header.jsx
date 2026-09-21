@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import HeaderActions from './HeaderActions';
 import useCartStore from '@/store/cartStore';
 import useThemeStore from '@/store/themeStore';
-import { Home, ShoppingCart, Sun, Moon } from 'lucide-react';
+import { ShoppingCart, Sun, Moon } from 'lucide-react';
 
 export default function Header() {
   const itemCount = useCartStore((s) => s.items.length);
@@ -40,16 +40,6 @@ export default function Header() {
           {theme === 'dark' ? <Sun className="w-5 h-5 md:w-6 md:h-6" /> : <Moon className="w-5 h-5 md:w-6 md:h-6" />}
         </button>
 
-        {/* Mobile Home Button (Hidden on Mobile) */}
-        <Link 
-          to="/" 
-          className={`hidden md:block relative p-2 transition-colors rounded-full ${isActive('/') ? 'bg-[#1c1d1f] dark:bg-white text-white dark:text-[#1c1d1f]' : 'text-[#1c1d1f] dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
-          title="Home" 
-          aria-label="Home"
-        >
-          <Home className="w-6 h-6" />
-        </Link>
-        
         {/* Cart Button (Hidden on Mobile) */}
         <Link 
           to="/cart" 
